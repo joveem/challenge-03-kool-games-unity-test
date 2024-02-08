@@ -1,4 +1,8 @@
-﻿{
+{
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#252535",
+        "activityBar.background": "#252545"
+    },
     "files.exclude":
     {
         "**/.DS_Store":true,
