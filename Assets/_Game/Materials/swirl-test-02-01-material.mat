@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: swirl-test-02-material
-  m_Shader: {fileID: -6465566751694194690, guid: 3ab9d31ce612c3e45933e689e2b7fe67, type: 3}
+  m_Name: swirl-test-02-01-material
+  m_Shader: {fileID: -6465566751694194690, guid: 58ad3139999bf464b857e9b5b343f278, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -111,7 +111,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _RotationFactor: 0.00001
+    - _RotationFactor: 0.025
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
