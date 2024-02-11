@@ -25,7 +25,8 @@ namespace KoolGames.Test03.GamePlay.VFX
     {
         public async void PlaySwirlAnimation(
             Vector3 swirlCenterGlobalPosition,
-            float duration)
+            float duration,
+            Transform finalParent = null)
         {
             float animationHalfDuration = duration / 2f;
 
@@ -36,15 +37,18 @@ namespace KoolGames.Test03.GamePlay.VFX
             float waitSeconds = _swirlBeginningDuration;
             await Task.Delay(Mathf.FloorToInt(waitSeconds * 1000));
 
-            GameObject rotationPivotIntance = new GameObject();
-            rotationPivotIntance.transform.position = _swirlCenterGlobalPosition;
-            rotationPivotIntance.transform.rotation = Quaternion.Euler(0, 0, 0);
+            GameObject rotationPivotInstance = new GameObject();
+            Transform rotationPivotTransform = rotationPivotInstance.transform;
+            rotationPivotTransform.position = _swirlCenterGlobalPosition;
+            rotationPivotTransform.rotation = Quaternion.Euler(0, 0, 0);
 
-            gameObject.transform.SetParent(rotationPivotIntance.transform);
+            gameObject.transform.SetParent(rotationPivotTransform);
 
+            if (finalParent != null)
+                rotationPivotTransform.SetParent(finalParent);
 
-            rotationPivotIntance.transform.DORotate(new Vector3(0f, 180f * 4, 0f), animationHalfDuration, RotateMode.FastBeyond360);
-            rotationPivotIntance.transform.DOScale(Vector3.zero, animationHalfDuration);
+            rotationPivotTransform.DORotate(new Vector3(0f, 180f * 4, 0f), animationHalfDuration, RotateMode.FastBeyond360);
+            rotationPivotTransform.DOScale(Vector3.zero, animationHalfDuration);
         }
     }
 }

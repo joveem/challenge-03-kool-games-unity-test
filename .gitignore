@@ -81,9 +81,3 @@ crashlytics-build.properties
 # JovDK screenshots folder
 /[Aa]ssets/[Ss]creenshots/*
 /[Aa]ssets/[Ss]creenshots.meta
-
-# JovDev.GroundedWar01 Payed Assets
-/[Aa]ssets/PolygonCity/*
-/[Aa]ssets/PolygonCity.meta
-/[Aa]ssets/PolygonPrototype/*
-/[Aa]ssets/PolygonPrototype.meta

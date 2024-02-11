@@ -33,6 +33,8 @@ namespace KoolGames.Test03.GamePlay.VFX.Testing.Showcase
         {
             Vector3 centerPosition = _baseSwirlPositionTransform.position;
             _elephantSwivelModel.PlaySwirlAnimation(centerPosition, _swirlDuration);
+
+            InstantiateMergeEffect(centerPosition);
         }
 
         void PlayBothSwirlAnimationsButton()
@@ -40,12 +42,29 @@ namespace KoolGames.Test03.GamePlay.VFX.Testing.Showcase
             Vector3 centerPosition = _baseSwirlPositionTransform.position;
             _elephantSwivelModel.PlaySwirlAnimation(centerPosition, _swirlDuration);
             _beetleSwivelModel.PlaySwirlAnimation(centerPosition, _swirlDuration);
+
+            InstantiateMergeEffect(centerPosition);
         }
 
         void PlayBettleSwirlAnimationButton()
         {
             Vector3 centerPosition = _baseSwirlPositionTransform.position;
             _beetleSwivelModel.PlaySwirlAnimation(centerPosition, _swirlDuration);
+
+            InstantiateMergeEffect(centerPosition);
+        }
+
+        [SerializeField] Vector3 _particleScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+        async void InstantiateMergeEffect(Vector3 centerPosition)
+        {
+            // return;
+            float waitSeconds = _swirlDuration * 0.35f;
+            await Task.Delay(Mathf.FloorToInt(waitSeconds * 1000));
+
+            GameObject particleInstance = Instantiate(_mergeParticleEffectPrefab, centerPosition, Quaternion.Euler(0, 0, 0));
+            particleInstance.transform.localScale = _particleScale;
+            // particleInstance.transform.lossyScale = _particleScale;
         }
     }
 }

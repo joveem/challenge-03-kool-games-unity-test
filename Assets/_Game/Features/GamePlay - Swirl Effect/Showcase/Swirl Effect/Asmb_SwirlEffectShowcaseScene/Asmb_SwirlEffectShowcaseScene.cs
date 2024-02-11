@@ -50,6 +50,7 @@ namespace KoolGames.Test03.GamePlay.VFX.Testing.Showcase
 
         [SerializeField] float _swirlDuration = 3f;
         [SerializeField] Transform _baseSwirlPositionTransform;
+        [SerializeField] GameObject _mergeParticleEffectPrefab;
 
 
         // void Awake()
