@@ -18,9 +18,9 @@ using JovDK.SerializingTools.Json;
 // ...
 
 
-namespace KoolGames.Test03.GamePlay.Entities
+namespace PackageName.MajorContext.MinorContext
 {
-    public partial class PlayerView : MovableView
+    public partial class SpatialUIHandler : MonoBehaviour
     {
 
         // [Space(5), Header("[ Dependencies ]"), Space(10)]
@@ -33,9 +33,9 @@ namespace KoolGames.Test03.GamePlay.Entities
         // bool _state;
 
 
-        [Space(5), Header("[ Parts ]"), Space(10)]
+        // [Space(5), Header("[ Parts ]"), Space(10)]
 
-        [SerializeField] List<GameObject> _ropePartsList = new List<GameObject>();
+        // bool _parts;
 
 
         // [Space(5), Header("[ Configs ]"), Space(10)]
@@ -48,10 +48,10 @@ namespace KoolGames.Test03.GamePlay.Entities
 
         // }
 
-        void Start()
-        {
-            ApplyInitialState();
-        }
+        // void Start()
+        // {
+
+        // }
 
         // void Update()
         // {

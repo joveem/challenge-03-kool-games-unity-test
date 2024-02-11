@@ -15,10 +15,9 @@ using JovDK.SafeActions;
 using JovDK.SerializingTools.Bson;
 using JovDK.SerializingTools.Json;
 using JovDK.Physics.Triggers;
-using PackageName.MajorContext.MinorContext;
 
 // from project
-// ...
+using KoolGames.Test03.GamePlay.Entities;
 
 
 namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
@@ -46,11 +45,14 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
 
         [SerializeField] Transform _playerTransform;
         [SerializeField] PlayerView _playerView;
-        [SerializeField] AnimalView _animalView;
+        // [SerializeField] AnimalView _animalView;
+        [SerializeField] AnimalView _beetleAnimalView;
+        [SerializeField] AnimalView _elephantAnimalView;
 
-        // [Space(5), Header("[ Configs ]"), Space(10)]
 
-        // bool _configs;
+        [Space(5), Header("[ Configs ]"), Space(10)]
+
+        [SerializeField] float _catchAnimationDuration = 1f;
 
 
 

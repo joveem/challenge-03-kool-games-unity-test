@@ -14,10 +14,9 @@ using JovDK.Debug;
 using JovDK.SafeActions;
 using JovDK.SerializingTools.Bson;
 using JovDK.SerializingTools.Json;
-using PackageName.MajorContext.MinorContext;
 
 // from project
-// ...
+using KoolGames.Test03.GamePlay.Entities;
 
 
 namespace KoolGames.Test03.GamePlay.PlayerController
