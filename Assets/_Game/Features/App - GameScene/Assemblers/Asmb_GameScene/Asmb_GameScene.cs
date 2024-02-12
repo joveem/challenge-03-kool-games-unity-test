@@ -11,6 +11,7 @@ using TMPro;
 
 // from company
 using JovDK.Debug;
+using JovDK.Generic.SpatialUI;
 using JovDK.SafeActions;
 using JovDK.SerializingTools.Json;
 
@@ -20,7 +21,7 @@ using JovDK.SerializingTools.Json;
 
 namespace PackageName.MajorContext.MinorContext
 {
-    public partial class SpatialUIHandler : MonoBehaviour
+    public partial class Asmb_GameScene : MonoBehaviour
     {
 
         // [Space(5), Header("[ Dependencies ]"), Space(10)]
@@ -33,9 +34,12 @@ namespace PackageName.MajorContext.MinorContext
         // bool _state;
 
 
-        // [Space(5), Header("[ Parts ]"), Space(10)]
+        [Space(5), Header("[ Parts ]"), Space(10)]
 
-        // bool _parts;
+        [SerializeField] SpatialUIHandler _spatialUIHandler;
+
+        [SerializeField] Transform _mergeStationTransform;
+        [SerializeField] RectTransform _mergeStationUIBubbleTransform;
 
 
         // [Space(5), Header("[ Configs ]"), Space(10)]
@@ -48,10 +52,10 @@ namespace PackageName.MajorContext.MinorContext
 
         // }
 
-        // void Start()
-        // {
-
-        // }
+        void Start()
+        {
+            SetInitialState();
+        }
 
         // void Update()
         // {
