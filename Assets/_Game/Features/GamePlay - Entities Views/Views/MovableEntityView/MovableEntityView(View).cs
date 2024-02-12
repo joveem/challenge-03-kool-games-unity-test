@@ -18,9 +18,9 @@ using JovDK.SerializingTools.Json;
 // ...
 
 
-namespace KoolGames.Test03.GamePlay.Entities
+namespace KoolGames.Test03.GamePlay.Entities.Views
 {
-    public partial class MovableView : MonoBehaviour, IMovableView
+    public partial class MovableEntityView : EntityView, IMovableView
     {
         public void ApplyZVelocity(float zVelocity)
         {

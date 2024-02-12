@@ -17,7 +17,7 @@ using JovDK.SerializingTools.Bson;
 using JovDK.SerializingTools.Json;
 
 // from project
-using KoolGames.Test03.GamePlay.Entities;
+using KoolGames.Test03.GamePlay.Entities.Views;
 
 
 namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
@@ -63,6 +63,10 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
                 baseAnimalView.transform.DOLocalMove(Vector3.zero, 0.1f);
                 baseAnimalView.transform.DOLocalRotate(Vector3.zero, 0.1f);
 
+                // !!! TODO: CONTINUE FROM HERE!!!!!
+                // !!! TODO: CONTINUE FROM HERE!!!!!
+                // !!! TODO: CONTINUE FROM HERE!!!!!
+                // !!! TODO: CONTINUE FROM HERE!!!!!
                 _playerMovementLogic.AddMovableView(baseAnimalView);
             };
         }

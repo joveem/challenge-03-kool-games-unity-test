@@ -16,7 +16,7 @@ using JovDK.SerializingTools.Bson;
 using JovDK.SerializingTools.Json;
 
 // from project
-using KoolGames.Test03.GamePlay.Entities;
+using KoolGames.Test03.GamePlay.Entities.Views;
 
 
 namespace KoolGames.Test03.GamePlay.PlayerController
@@ -83,7 +83,7 @@ namespace KoolGames.Test03.GamePlay.PlayerController
             Vector3 realVelocity = (_playerRigidbody.position - _oldPosition) / Time.fixedDeltaTime;
             _oldPosition = _playerRigidbody.position;
 
-            foreach (MovableView playerView in _playerViewsList)
+            foreach (MovableEntityView playerView in _playerViewsList)
             {
                 playerView.DoIfNotNull(() =>
                 {
@@ -93,13 +93,13 @@ namespace KoolGames.Test03.GamePlay.PlayerController
             }
         }
 
-        public void AddMovableView(MovableView movableView)
+        public void AddMovableView(MovableEntityView movableView)
         {
             if (!_playerViewsList.Contains(movableView))
                 _playerViewsList.Add(movableView);
         }
 
-        public void RemoveMovableView(MovableView movableView)
+        public void RemoveMovableView(MovableEntityView movableView)
         {
             if (_playerViewsList.Contains(movableView))
                 _playerViewsList.Remove(movableView);

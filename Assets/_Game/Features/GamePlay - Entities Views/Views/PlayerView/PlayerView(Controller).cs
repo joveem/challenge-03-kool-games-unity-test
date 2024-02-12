@@ -18,9 +18,9 @@ using JovDK.SerializingTools.Json;
 // ...
 
 
-namespace KoolGames.Test03.GamePlay.Entities
+namespace KoolGames.Test03.GamePlay.Entities.Views
 {
-    public partial class PlayerView : MovableView
+    public partial class PlayerView : MovableEntityView
     {
         void ApplyInitialState()
         {

@@ -15,12 +15,12 @@ using JovDK.SafeActions;
 using JovDK.SerializingTools.Json;
 
 // from project
-// ...
+using KoolGames.Test03.GamePlay.Entities.Views;
 
 
 namespace KoolGames.Test03.GamePlay.Entities
 {
-    public partial class MovableView : MonoBehaviour, IMovableView
+    public partial class Entity : MonoBehaviour
     {
 
         // [Space(5), Header("[ Dependencies ]"), Space(10)]
@@ -28,14 +28,14 @@ namespace KoolGames.Test03.GamePlay.Entities
         // bool _dependencies;
 
 
-        // [Space(5), Header("[ State ]"), Space(10)]
+        [Space(5), Header("[ State ]"), Space(10)]
 
-        // bool _state;
+        public EntityView EntityView;
 
 
         // [Space(5), Header("[ Parts ]"), Space(10)]
 
-        [SerializeField] protected Animator _animator;
+        // bool _parts;
 
 
         // [Space(5), Header("[ Configs ]"), Space(10)]

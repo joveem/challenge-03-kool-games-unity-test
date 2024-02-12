@@ -20,7 +20,7 @@ using JovDK.SerializingTools.Json;
 
 namespace KoolGames.Test03.GamePlay.Entities.Views
 {
-    public partial class PlayerView : MovableEntityView
+    public partial class MovableEntityView : EntityView, IMovableView
     {
 
         // [Space(5), Header("[ Dependencies ]"), Space(10)]
@@ -33,9 +33,9 @@ namespace KoolGames.Test03.GamePlay.Entities.Views
         // bool _state;
 
 
-        [Space(5), Header("[ Parts ]"), Space(10)]
+        // [Space(5), Header("[ Parts ]"), Space(10)]
 
-        [SerializeField] List<GameObject> _ropePartsList = new List<GameObject>();
+        [SerializeField] protected Animator _animator;
 
 
         // [Space(5), Header("[ Configs ]"), Space(10)]
@@ -48,10 +48,10 @@ namespace KoolGames.Test03.GamePlay.Entities.Views
 
         // }
 
-        void Start()
-        {
-            ApplyInitialState();
-        }
+        // void Start()
+        // {
+
+        // }
 
         // void Update()
         // {

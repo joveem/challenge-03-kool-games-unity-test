@@ -18,9 +18,9 @@ using JovDK.SerializingTools.Json;
 // ...
 
 
-namespace KoolGames.Test03.GamePlay.Entities
+namespace KoolGames.Test03.GamePlay.Entities.Views
 {
-    public partial class AnimalView : MovableView
+    public partial class AnimalView : MovableEntityView
     {
 
         // [Space(5), Header("[ Dependencies ]"), Space(10)]
@@ -36,6 +36,7 @@ namespace KoolGames.Test03.GamePlay.Entities
         [Space(5), Header("[ Parts ]"), Space(10)]
 
         public Transform MountContainerTransform;
+        public Transform UnmountPivotTransform;
 
 
         // [Space(5), Header("[ Configs ]"), Space(10)]
