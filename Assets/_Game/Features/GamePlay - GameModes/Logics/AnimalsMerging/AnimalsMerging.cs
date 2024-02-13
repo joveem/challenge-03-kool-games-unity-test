@@ -29,9 +29,11 @@ namespace PackageName.MajorContext.MinorContext
         [SerializeField] MapData _mapData = null;
 
 
-        // [Space(5), Header("[ State ]"), Space(10)]
+        [Space(5), Header("[ State ]"), Space(10)]
 
-        // bool _state;
+        [SerializeField] PlayerEntity _playerEntity;
+        Dictionary<AnimalEntity, AnimalData> _currentAnimalsList = new Dictionary<AnimalEntity, AnimalData>();
+        // List<AnimalData> _currentAnimalsList = new List<AnimalData>();
 
 
         // [Space(5), Header("[ Parts ]"), Space(10)]
@@ -53,12 +55,14 @@ namespace PackageName.MajorContext.MinorContext
         void Start()
         {
             ApplyInitialState();
+            SubscribeAllListeners();
         }
 
-        // void Update()
-        // {
-
-        // }
+        void Update()
+        {
+            HandleCapturingArea();
+            HandleCapturing();
+        }
 
         // void FixedUpdate()
         // {

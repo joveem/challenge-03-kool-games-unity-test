@@ -23,14 +23,14 @@ namespace KoolGames.Test03.GamePlay.PlayerController
 {
     public partial class PlayerCameraLogic : MonoBehaviour
     {
-        public void OnControllerCameraInputChanged(Vector3 inputVector)
-        {
-            HandleCameraInput(inputVector);
-        }
+        // public void OnControllerCameraInputChanged(Vector3 inputVector)
+        // {
+        //     HandleCameraInput(inputVector);
+        // }
 
-        void OnAimHitUpdate(Vector3 hitGlobalPosition)
-        {
-            OnAimHitUpdateCallback?.Invoke(hitGlobalPosition);
-        }
+        // void OnAimHitUpdate(Vector3 hitGlobalPosition)
+        // {
+        //     OnAimHitUpdateCallback?.Invoke(hitGlobalPosition);
+        // }
     }
 }

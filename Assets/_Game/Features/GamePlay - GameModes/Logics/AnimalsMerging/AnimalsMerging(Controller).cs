@@ -12,11 +12,14 @@ using TMPro;
 
 // from company
 using JovDK.Debug;
+using JovDK.Math;
 using JovDK.SafeActions;
 using JovDK.SerializingTools.Json;
 
 // from project
 using KoolGames.Test03.GamePlay.Entities;
+using JovDK.Physics.Triggers;
+using KoolGames.Test03.GamePlay.Entities.Views;
 
 
 namespace PackageName.MajorContext.MinorContext
@@ -63,7 +66,10 @@ namespace PackageName.MajorContext.MinorContext
             // setting random positions
             Vector3 spawStartPositon = _mapData.GetAnimalsSpawnStart();
             Vector3 spawEndPositon = _mapData.GetAnimalsSpawnEnd();
-            randomPositionList = GetUniformDistribuitionOverArea(spawStartPositon, spawEndPositon, totalAmount);
+            randomPositionList = MathSpatial.UniformDistribuitionOverArea(
+                                    spawStartPositon,
+                                    spawEndPositon,
+                                    totalAmount);
 
             for (int i = 0; i < randomPositionList.Count; i++)
             {
@@ -97,74 +103,87 @@ namespace PackageName.MajorContext.MinorContext
                 Vector3 position = randomPositionList[i];
                 Quaternion rotation = randomRotationList[i];
 
-                Instantiate(prefab, position, rotation);
+                IntantiateAnimal(prefab, position, rotation);
             }
         }
 
-        List<Vector3> GetUniformDistribuitionOverArea(
-            Vector3 startPosition,
-            Vector3 endPosition,
-            int positionsAmount)
+        [SerializeField] MeshRenderer _capturingAreaMesh;
+        [SerializeField] TriggerEmitter _capturingTrigger;
+        Dictionary<AnimalEntity, AnimalData> _inCapturingAreaAnimalsList = new Dictionary<AnimalEntity, AnimalData>();
+
+        void HandleCapturingArea()
         {
-            List<Vector3> positionsList = null;
+            foreach (AnimalData animalData in _currentAnimalsList.Values)
+                animalData.DoIfNotNull(() => animalData.IsBeeingDominated = false);
 
-            Vector3 areaSize = endPosition - startPosition;
-            positionsList = GetUniformDistribuitionOverArea(areaSize, positionsAmount);
+            int capturingAnimalsAmount = 0;
 
-            for (int i = 0; i < positionsList.Count; i++)
+            foreach (AnimalData animalData in _inCapturingAreaAnimalsList.Values)
             {
-                Vector3 position = positionsList[i];
-                position += startPosition;
-                positionsList[i] = position;
+                animalData.DoIfNotNull(
+                    () =>
+                    {
+                        if (!animalData.IsDominated)
+                        {
+                            animalData.IsBeeingDominated = true;
+                            capturingAnimalsAmount++;
+                        }
+                    });
             }
 
-            return positionsList;
+            bool isCapturingAnimals = capturingAnimalsAmount > 0;
+            _capturingAreaMesh.enabled = isCapturingAnimals;
+            PlayerView playerView = (PlayerView)_playerEntity.EntityView;
+
+            if (isCapturingAnimals)
+                playerView.PlayCatchAnimation();
+            else
+                playerView.StopCatchAnimation();
         }
 
-        List<Vector3> GetUniformDistribuitionOverArea(
-            Vector3 areaSize,
-            int positionsAmount)
+        void HandleCapturing()
         {
-            List<Vector3> positionsList = new List<Vector3>();
-
-            float xValue = 1;
-            float zValue = 1;
-            float horizontalFactor = areaSize.x / areaSize.z;
-            float verticalFactor = areaSize.z / areaSize.x;
-            int currentPositionsAmount = (int)(xValue * zValue);
-
-            while (positionsAmount > currentPositionsAmount)
+            foreach (AnimalData animalData in _currentAnimalsList.Values)
             {
-                float nextHorizontalFactor = xValue + 1 / zValue;
-                float nextVerticalFactor = zValue + 1 / xValue;
-
-                if (nextHorizontalFactor / horizontalFactor < nextVerticalFactor / verticalFactor)
-                    xValue++;
-                else
-                    zValue++;
-
-                currentPositionsAmount = (int)(xValue * zValue);
-            }
-
-            float horizontalGap = areaSize.x / (xValue - 1);
-            float verticalGap = areaSize.z / (zValue - 1);
-
-            DebugExtension.DevLog("areaSize = " + areaSize);
-            DebugExtension.DevLog("xValue = " + xValue);
-            DebugExtension.DevLog("zValue = " + zValue);
-            DebugExtension.DevLog("horizontalGap = " + horizontalGap);
-            DebugExtension.DevLog("verticalGap = " + verticalGap);
-
-            for (float z = 0; z < zValue; z++)
-            {
-                for (float x = 0; x < xValue; x++)
+                animalData.DoIfNotNull(() =>
                 {
-                    Vector3 position = new Vector3(x * horizontalGap, 0, z * verticalGap);
-                    positionsList.Add(position);
-                }
-            }
+                    Slider domainSlider = animalData.DomainSlider;
+                    bool showDomainSlider = false;
 
-            return positionsList;
+                    if (!animalData.IsDominated)
+                    {
+                        // if (true) // TODO: REVIEW THIS!
+                        if (animalData.IsBeeingDominated)
+                        {
+                            // TODO: REVIEW THIS!
+                            animalData.CurrentDomainForce += Time.deltaTime;
+
+                            if (animalData.CurrentDomainForce >= animalData.RequiredDomainForce)
+                                DoPlayerCapturing(_playerEntity, animalData);
+                            else
+                            {
+                                showDomainSlider = true;
+
+                                float domainFactor = animalData.CurrentDomainForce / animalData.RequiredDomainForce;
+                                domainSlider.DoIfNotNull(() => domainSlider.value = domainFactor);
+                            }
+                        }
+                        else
+                            animalData.CurrentDomainForce = 0f;
+                    }
+
+                    domainSlider.SetActiveIfNotNull(showDomainSlider);
+                });
+            }
+        }
+
+        void DoPlayerCapturing(
+            PlayerEntity playerEntity,
+            AnimalData animalData)
+        {
+            animalData.IsDominated = true;
+            animalData.IsBeeingDominated = false;
+            animalData.CurrentDomainForce = 0f;
         }
     }
 }

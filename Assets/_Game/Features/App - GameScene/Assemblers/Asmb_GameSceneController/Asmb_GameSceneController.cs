@@ -42,8 +42,6 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
         [SerializeField] PlayerMovementLogic _playerMovementLogic;
         [SerializeField] PlayerCameraLogic _playerCameraLogic;
 
-        [SerializeField] TriggerEmitter _catchAreaTrigger;
-
         [SerializeField] PlayerEntity _playerEntity;
         [SerializeField] AnimalEntity _beetleEntity;
         [SerializeField] AnimalEntity _elephantEntity;
@@ -65,12 +63,12 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
         //     SetInitialState();
         // }
 
-        void Update()
-        {
-            HandleDEBUGInputs();
-#if UNITY_EDITOR
-#endif
-        }
+        // void Update()
+        // {
+        // #if UNITY_EDITOR
+        //      HandleDEBUGInputs();
+        // #endif
+        // }
 
         // void FixedUpdate()
         // {

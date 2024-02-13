@@ -28,94 +28,23 @@ namespace KoolGames.Test03.GamePlay.PlayerController
             _localPlayerLayer = LayerMask.NameToLayer("local-player");
         }
 
-        // void HandleCameraPosition()
-        // {
-        //     if (_baseTankEntityView == null)
-        //         return;
-
-        //     Vector3 turretGlobalPosition = _baseTankEntityView.GetTurretGlobalPosition();
-        //     _cameraPositionPivot.position = turretGlobalPosition;
-        // }
-
-        void HandleCameraInput(Vector3 inputVector)
+        void HandleCameraPosition()
         {
-            _currentCameraInput = inputVector;
+            if (_playerEntity == null || _cameraPositionPivot == null)
+            {
+                string debugText =
+                    "$ > ".ToColor(GoodColors.Red) +
+                    "ERROR trying to HandleMovement!" + "\n" +
+                    "_playerEntity OR _cameraPositionPivot IS NULL!" + "\n" +
+                    "";
+                DebugExtension.DevLog(debugText);
+                return;
+            }
 
-            float currentXInput = _currentCameraInput.x;
-            float currentYInput = _currentCameraInput.y;
+            Vector3 cameraPosition = _playerEntity.transform.position;
+            cameraPosition += _cameraPositionDelta;
 
-            Vector3 cameraRotationEuler = _cameraRotationPivot.transform.rotation.eulerAngles;
-            // Vector3 playerRotationEuler = _playerRigidbody.rotation.eulerAngles;
-            Vector3 playerRotationEuler = _playerRigidbody.transform.rotation.eulerAngles;
-
-            cameraRotationEuler.x += currentYInput * _baseCameraSensitivity * _cameraSensitivityFactor * -1;
-            playerRotationEuler.y += currentXInput * _baseCameraSensitivity * _cameraSensitivityFactor;
-
-            while (cameraRotationEuler.x > 180f)
-                cameraRotationEuler.x -= 360f;
-
-            cameraRotationEuler.x = Mathf.Clamp(cameraRotationEuler.x, -_maxVerticalAngle, -_minVerticalAngle);
-
-            _cameraRotationPivot.transform.rotation = Quaternion.Euler(cameraRotationEuler);
-            // _playerRigidbody.MoveRotation(Quaternion.Euler(playerRotationEuler));
-            _playerRigidbody.transform.rotation = Quaternion.Euler(playerRotationEuler);
+            _cameraPositionPivot.position = cameraPosition;
         }
-
-        // void HandleCameraDistance()
-        // {
-        //     Vector3 rotationPivotPosition = _cameraRotationPivot.transform.position;
-        //     Quaternion rotationPivotGlobalRotation = _cameraRotationPivot.transform.rotation;
-        //     Vector3 rotationPivotGlobalRotationDirection = rotationPivotGlobalRotation * Vector3.back;
-
-        //     bool hasHit = Physics.Raycast(
-        //                     rotationPivotPosition,
-        //                     rotationPivotGlobalRotationDirection,
-        //                     out RaycastHit raycastHit,
-        //                     _maxDistance);
-
-        //     float actualCameraDistance = _maxDistance;
-
-        //     if (hasHit)
-        //         actualCameraDistance = Vector3.Distance(rotationPivotPosition, raycastHit.point);
-
-        //     _cameraDistancePivot.localPosition = new Vector3(0f, 0f, -actualCameraDistance);
-        // }
-
-        // void HandleAimEmitting()
-        // {
-        //     Vector3 rotationPivotPosition = _cameraRotationPivot.transform.position;
-        //     Quaternion rotationPivotGlobalRotation = _cameraRotationPivot.transform.rotation;
-        //     Vector3 rotationPivotGlobalRotationDirection = rotationPivotGlobalRotation * Vector3.forward;
-
-        //     bool hasHit = Physics.Raycast(
-        //                     rotationPivotPosition,
-        //                     rotationPivotGlobalRotationDirection,
-        //                     out RaycastHit raycastHit,
-        //                     Mathf.Infinity);
-
-        //     bool isLocalPlayer = false;
-        //     Vector3 aimGlobalPosition;
-
-        //     if (hasHit)
-        //     {
-        //         isLocalPlayer = raycastHit.collider.gameObject.layer == _localPlayerLayer;
-
-        //         if (!isLocalPlayer)
-        //             aimGlobalPosition = raycastHit.point;
-        //     }
-
-        //     if (hasHit && !isLocalPlayer)
-        //         aimGlobalPosition = raycastHit.point;
-        //     else
-        //     {
-        //         // fix aiming problems by changing the aim position
-        //         // to a far point on the camera aim direction 
-        //         Vector3 farNormalizedDirection = rotationPivotGlobalRotationDirection.normalized * 100000;
-        //         aimGlobalPosition = rotationPivotPosition + farNormalizedDirection;
-        //     }
-
-        //     // Debug.DrawLine(rotationPivotPosition, aimGlobalPosition, Color.red);
-        //     OnAimHitUpdate(aimGlobalPosition);
-        // }
     }
 }

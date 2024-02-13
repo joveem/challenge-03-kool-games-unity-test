@@ -37,23 +37,23 @@ namespace KoolGames.Test03.GamePlay.Entities.Views
         public void PlayCatchAnimation()
         {
             ShowRope();
-            _animator.SetTrigger("start-catch");
+            _animator.SetBool("is-catching", true);
         }
 
         public void StopCatchAnimation()
         {
             HideRope();
-            _animator.SetTrigger("end-catch");
+            _animator.SetBool("is-catching", false);
         }
 
         public void PlayMountAnimation()
         {
-            _animator.SetTrigger("start-mount");
+            _animator.SetBool("is-mounting", true);
         }
 
         public void StopMountAnimation()
         {
-            _animator.SetTrigger("end-mount");
+            _animator.SetBool("is-mounting", false);
         }
     }
 }

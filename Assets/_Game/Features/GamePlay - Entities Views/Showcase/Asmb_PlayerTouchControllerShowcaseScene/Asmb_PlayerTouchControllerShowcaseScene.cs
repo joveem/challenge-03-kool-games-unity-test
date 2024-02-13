@@ -46,6 +46,7 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
 
         [SerializeField] Entity _playerEntity;
         [SerializeField] Entity _beetleEntity;
+        [SerializeField] Entity _beetlephantEntity;
         [SerializeField] Entity _elephantEntity;
 
 
@@ -67,8 +68,8 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
 
         void Update()
         {
-            HandleDEBUGInputs();
 #if UNITY_EDITOR
+            HandleDEBUGInputs();
 #endif
         }
 

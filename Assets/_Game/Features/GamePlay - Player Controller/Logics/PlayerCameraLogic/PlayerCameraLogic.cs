@@ -16,7 +16,7 @@ using JovDK.SerializingTools.Bson;
 using JovDK.SerializingTools.Json;
 
 // from project
-// ...
+using KoolGames.Test03.GamePlay.Entities;
 
 
 namespace KoolGames.Test03.GamePlay.PlayerController
@@ -31,13 +31,7 @@ namespace KoolGames.Test03.GamePlay.PlayerController
 
         [Space(5), Header("[ State ]"), Space(10)]
 
-        Vector3 _currentCameraInput;
-        float _cameraSensitivityFactor = 1f;
-        float _baseCameraSensitivity = 180f;
-        float _minVerticalAngle = -85f;
-        float _maxVerticalAngle = 70f;
-
-        public Action<Vector3> OnAimHitUpdateCallback = null;
+        [SerializeField] Entity _playerEntity;
 
 
         // [Space(5), Header("[ Parts ]"), Space(10)]
@@ -47,11 +41,8 @@ namespace KoolGames.Test03.GamePlay.PlayerController
 
         [Space(5), Header("[ Configs ]"), Space(10)]
 
-        // [SerializeField] Transform _cameraPositionPivot;
-        [SerializeField] Transform _cameraRotationPivot;
-        [SerializeField] Rigidbody _playerRigidbody;
-        // [SerializeField] Transform _cameraDistancePivot;
-        // [SerializeField] TankEntityView _baseTankEntityView;
+        [SerializeField] Transform _cameraPositionPivot;
+        [SerializeField] Vector3 _cameraPositionDelta = new Vector3(0f, 0f, 0f);
 
         // layers
         int _localPlayerLayer;
@@ -72,10 +63,10 @@ namespace KoolGames.Test03.GamePlay.PlayerController
 
         // }
 
-        // void LateUpdate()
-        // {
-
-        // }
+        void LateUpdate()
+        {
+            HandleCameraPosition();
+        }
 
         // void FixedUpdate()
         // {

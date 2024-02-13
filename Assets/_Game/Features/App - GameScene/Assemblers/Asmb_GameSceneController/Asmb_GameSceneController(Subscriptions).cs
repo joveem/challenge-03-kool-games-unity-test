@@ -27,33 +27,11 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
         void SubscribeAllListeners()
         {
             _playerControllerLogic.OnMovementInputChangedCallback += _playerMovementLogic.OnControllerMovementInputChanged;
-            _catchAreaTrigger.OnTriggerEnterCallback += OnCatchAreaEnter;
-            _catchAreaTrigger.OnTriggerExitCallback += OnCatchAreaExit;
         }
 
         void UnsubscribeAllListeners()
         {
             _playerControllerLogic.OnMovementInputChangedCallback -= _playerMovementLogic.OnControllerMovementInputChanged;
-            _catchAreaTrigger.OnTriggerEnterCallback -= OnCatchAreaEnter;
-            _catchAreaTrigger.OnTriggerExitCallback -= OnCatchAreaExit;
-        }
-
-        void OnCatchAreaEnter(Collider collider)
-        {
-            if (collider.tag.Equals("player"))
-            {
-                PlayerView playerView = (PlayerView)_playerEntity.EntityView;
-                playerView.PlayCatchAnimation();
-            }
-        }
-
-        void OnCatchAreaExit(Collider collider)
-        {
-            if (collider.tag.Equals("player"))
-            {
-                PlayerView playerView = (PlayerView)_playerEntity.EntityView;
-                playerView.StopCatchAnimation();
-            }
         }
     }
 }
