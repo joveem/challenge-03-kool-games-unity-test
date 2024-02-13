@@ -1304,6 +1304,7 @@ Transform:
   - {fileID: 1539338339867336958}
   - {fileID: 6709942141437617875}
   - {fileID: 6333371582881648891}
+  - {fileID: 2850194801307306412}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1340,8 +1341,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 041818b4d77e7d1429cfa76213befde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Entity: {fileID: 0}
   _animator: {fileID: 3140519211295435925}
   MountContainerTransform: {fileID: 3140519211839484707}
+  DismountPivotTransform: {fileID: 2850194801307306412}
 --- !u!1 &2883806987051863527
 GameObject:
   m_ObjectHideFlags: 0
@@ -2570,6 +2573,37 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.017327951, y: -0.0023324685, z: 0.013663013}
     m_Extent: {x: 0.0010750089, y: 0.0017982796, z: 0.0031526196}
   m_DirtyAABB: 0
+--- !u!1 &5273093409294080254
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2850194801307306412}
+  m_Layer: 0
+  m_Name: dismount-position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2850194801307306412
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5273093409294080254}
+  m_LocalRotation: {x: -0, y: -0.70710576, z: -0, w: 0.7071079}
+  m_LocalPosition: {x: 4, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3179511547587234673}
+  m_RootOrder: 25
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &5345137308027635783
 GameObject:
   m_ObjectHideFlags: 0

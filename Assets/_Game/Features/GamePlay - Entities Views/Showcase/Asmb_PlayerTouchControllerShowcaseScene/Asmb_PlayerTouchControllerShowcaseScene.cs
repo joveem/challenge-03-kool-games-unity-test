@@ -17,6 +17,7 @@ using JovDK.SerializingTools.Json;
 using JovDK.Physics.Triggers;
 
 // from project
+using KoolGames.Test03.GamePlay.Entities;
 using KoolGames.Test03.GamePlay.Entities.Views;
 
 
@@ -43,11 +44,9 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
 
         [SerializeField] TriggerEmitter _catchAreaTrigger;
 
-        [SerializeField] Transform _playerTransform;
-        [SerializeField] PlayerView _playerView;
-        // [SerializeField] AnimalView _animalView;
-        [SerializeField] AnimalView _beetleAnimalView;
-        [SerializeField] AnimalView _elephantAnimalView;
+        [SerializeField] Entity _playerEntity;
+        [SerializeField] Entity _beetleEntity;
+        [SerializeField] Entity _elephantEntity;
 
 
         [Space(5), Header("[ Configs ]"), Space(10)]

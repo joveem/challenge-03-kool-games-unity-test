@@ -63,13 +63,13 @@ namespace KoolGames.Test03.GamePlay.VFX.Testing.Showcase
             SetupAllButton();
         }
 
-        float _cycleT = 0;
-        [SerializeField] float _cycleDuration = 4;
+        // float _cycleT = 0;
+        // [SerializeField] float _cycleDuration = 4;
 
-        [SerializeField] Vector2 _rotationFactorRemap = new Vector2(0, 0.02f);
-        [SerializeField] Vector2 _additionalCurveForceRemap = new Vector2(3000, 30000);
-        [SerializeField] float _objectAAdditionalCurvesAmountByUnit = 4f;
-        [SerializeField] float _objectAAdditionalCurveDelta = 0f;
+        // [SerializeField] Vector2 _rotationFactorRemap = new Vector2(0, 0.02f);
+        // [SerializeField] Vector2 _additionalCurveForceRemap = new Vector2(3000, 30000);
+        // [SerializeField] float _objectAAdditionalCurvesAmountByUnit = 4f;
+        // [SerializeField] float _objectAAdditionalCurveDelta = 0f;
 
 
         void Update()

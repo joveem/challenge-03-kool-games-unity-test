@@ -36,7 +36,7 @@ namespace KoolGames.Test03.GamePlay.Entities.Views
         [Space(5), Header("[ Parts ]"), Space(10)]
 
         public Transform MountContainerTransform;
-        public Transform UnmountPivotTransform;
+        public Transform DismountPivotTransform;
 
 
         // [Space(5), Header("[ Configs ]"), Space(10)]

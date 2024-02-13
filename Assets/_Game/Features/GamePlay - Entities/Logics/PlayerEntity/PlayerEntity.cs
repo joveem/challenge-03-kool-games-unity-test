@@ -15,12 +15,12 @@ using JovDK.SafeActions;
 using JovDK.SerializingTools.Json;
 
 // from project
-using KoolGames.Test03.GamePlay.Entities.Views;
+// ...
 
 
 namespace KoolGames.Test03.GamePlay.Entities
 {
-    public partial class Entity : MonoBehaviour
+    public partial class PlayerEntity : Entity
     {
 
         // [Space(5), Header("[ Dependencies ]"), Space(10)]
@@ -28,18 +28,14 @@ namespace KoolGames.Test03.GamePlay.Entities
         // bool _dependencies;
 
 
-        [Space(5), Header("[ State ]"), Space(10)]
+        // [Space(5), Header("[ State ]"), Space(10)]
 
-        List<Entity> _dominatedEntitiesList = new List<Entity>();
-
-        public Vector3 LastPosition;
+        // bool _state;
 
 
-        [Space(5), Header("[ Parts ]"), Space(10)]
+        // [Space(5), Header("[ Parts ]"), Space(10)]
 
-        public EntityView EntityView;
-        public Rigidbody Rigidbody;
-        public Collider Collider;
+        // bool _parts;
 
 
         // [Space(5), Header("[ Configs ]"), Space(10)]

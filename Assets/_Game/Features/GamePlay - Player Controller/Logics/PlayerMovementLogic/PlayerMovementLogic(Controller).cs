@@ -16,6 +16,7 @@ using JovDK.SerializingTools.Bson;
 using JovDK.SerializingTools.Json;
 
 // from project
+using KoolGames.Test03.GamePlay.Entities;
 using KoolGames.Test03.GamePlay.Entities.Views;
 
 
@@ -25,8 +26,18 @@ namespace KoolGames.Test03.GamePlay.PlayerController
     {
         void HandleMovement()
         {
-            if (_playerRigidbody == null)
+            if (_playerEntity == null || _playerEntity.Rigidbody == null)
+            {
+                string debugText =
+                    "$ > ".ToColor(GoodColors.Red) +
+                    "ERROR trying to HandleMovement!" + "\n" +
+                    "_playerEntity OR _playerEntity.Rigidbody IS NULL!" + "\n" +
+                    "";
+                DebugExtension.DevLog(debugText);
                 return;
+            }
+
+            Rigidbody playerRigidbody = _playerEntity.Rigidbody;
 
             float currentXInput = _currentMovementInput.x;
             float currentYInput = _currentMovementInput.y;
@@ -65,11 +76,11 @@ namespace KoolGames.Test03.GamePlay.PlayerController
             Vector3 inputPosition = new Vector3(currentXMovementVelocity, 0, currentZMovementVelocity);
 
             if (currentXInput != 0 || currentYInput != 0)
-                _playerRigidbody.rotation = Quaternion.LookRotation(inputPosition, Vector3.up);
+                playerRigidbody.rotation = Quaternion.LookRotation(inputPosition, Vector3.up);
 
-            Vector3 direction = _playerRigidbody.transform.rotation * (Vector3.forward * inputPosition.magnitude);
+            Vector3 direction = playerRigidbody.transform.rotation * (Vector3.forward * inputPosition.magnitude);
 
-            _playerRigidbody.velocity = direction;
+            playerRigidbody.velocity = direction;
 
             // if (direction.magnitude > 0.1f)
             //     _playerView.transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
@@ -77,32 +88,38 @@ namespace KoolGames.Test03.GamePlay.PlayerController
 
         // [SerializeField] Transform _playerView
 
-        Vector3 _oldPosition;
         void HandleAnimation()
         {
-            Vector3 realVelocity = (_playerRigidbody.position - _oldPosition) / Time.fixedDeltaTime;
-            _oldPosition = _playerRigidbody.position;
-
-            foreach (MovableEntityView playerView in _playerViewsList)
+            if (_playerEntity == null || _playerEntity.Rigidbody == null)
             {
-                playerView.DoIfNotNull(() =>
+                string debugText =
+                    "$ > ".ToColor(GoodColors.Red) +
+                    "ERROR trying to HandleAnimation!" + "\n" +
+                    "_playerEntity OR _playerEntity.Rigidbody IS NULL!" + "\n" +
+                    "";
+                DebugExtension.DevLog(debugText);
+                return;
+            }
+
+            Rigidbody playerRigidbody = _playerEntity.Rigidbody;
+
+            Vector3 lastPosition = _playerEntity.LastPosition;
+            Vector3 realVelocity = (playerRigidbody.position - lastPosition) / Time.fixedDeltaTime;
+            float playerZVelocity = realVelocity.magnitude;
+            _playerEntity.LastPosition = playerRigidbody.position;
+
+            if (_playerEntity.EntityView is MovableEntityView movableEntityView)
+                movableEntityView.ApplyZVelocity(playerZVelocity);
+
+            List<Entity> underDomainEntities = _playerEntity.GetDominatedEntitiesList();
+            foreach (Entity dominatedEntity in underDomainEntities)
+            {
+                dominatedEntity.DoIfNotNull(() =>
                 {
-                    float playerZVelocity = realVelocity.magnitude;
-                    playerView.ApplyZVelocity(playerZVelocity);
+                    if (dominatedEntity.EntityView is MovableEntityView movableEntityView)
+                        movableEntityView.ApplyZVelocity(playerZVelocity);
                 });
             }
-        }
-
-        public void AddMovableView(MovableEntityView movableView)
-        {
-            if (!_playerViewsList.Contains(movableView))
-                _playerViewsList.Add(movableView);
-        }
-
-        public void RemoveMovableView(MovableEntityView movableView)
-        {
-            if (_playerViewsList.Contains(movableView))
-                _playerViewsList.Remove(movableView);
         }
     }
 }

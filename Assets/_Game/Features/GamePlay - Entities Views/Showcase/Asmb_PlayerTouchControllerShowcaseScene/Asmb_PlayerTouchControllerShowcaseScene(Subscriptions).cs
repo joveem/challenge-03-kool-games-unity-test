@@ -16,6 +16,8 @@ using JovDK.SerializingTools.Bson;
 using JovDK.SerializingTools.Json;
 
 // from project
+using KoolGames.Test03.GamePlay.Entities;
+using KoolGames.Test03.GamePlay.Entities.Views;
 // ...
 
 
@@ -40,13 +42,19 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
         void OnCatchAreaEnter(Collider collider)
         {
             if (collider.tag.Equals("player"))
-                _playerView.PlayCatchAnimation();
+            {
+                PlayerView playerView = (PlayerView)_playerEntity.EntityView;
+                playerView.PlayCatchAnimation();
+            }
         }
 
         void OnCatchAreaExit(Collider collider)
         {
             if (collider.tag.Equals("player"))
-                _playerView.StopCatchAnimation();
+            {
+                PlayerView playerView = (PlayerView)_playerEntity.EntityView;
+                playerView.StopCatchAnimation();
+            }
         }
     }
 }

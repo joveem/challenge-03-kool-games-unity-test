@@ -41,12 +41,12 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
 
         void PlayBeetleCatchAnimation()
         {
-            DoAnimalCatch(_playerTransform, _playerView, _beetleAnimalView);
+            DoAnimalCatch(_playerEntity, _beetleEntity);
         }
 
         void PlayElephantCatchAnimation()
         {
-            DoAnimalCatch(_playerTransform, _playerView, _elephantAnimalView);
+            DoAnimalCatch(_playerEntity, _elephantEntity);
         }
     }
 }

@@ -37,16 +37,27 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
                 DebugExtension.DevLog("[2]".ToColor(GoodColors.Blue) + " > PlayCatchAnimation (Elephant)");
                 PlayElephantCatchAnimation();
             }
+
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                DebugExtension.DevLog("[3]".ToColor(GoodColors.Blue) + " > DismountFromCurrentAnimal");
+                DismountFromCurrentAnimal();
+            }
         }
 
         void PlayBeetleCatchAnimation()
         {
-            DoAnimalCatch(_playerTransform, _playerView, _beetleAnimalView);
+            DoAnimalMount(_playerEntity, _beetleEntity);
         }
 
         void PlayElephantCatchAnimation()
         {
-            DoAnimalCatch(_playerTransform, _playerView, _elephantAnimalView);
+            DoAnimalMount(_playerEntity, _elephantEntity);
+        }
+
+        void DismountFromCurrentAnimal()
+        {
+            DoAnimalDismount(_playerEntity);
         }
     }
 }

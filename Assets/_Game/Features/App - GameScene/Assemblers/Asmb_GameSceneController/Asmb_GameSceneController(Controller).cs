@@ -18,6 +18,7 @@ using JovDK.SerializingTools.Json;
 
 // from project
 using KoolGames.Test03.GamePlay.Entities.Views;
+using KoolGames.Test03.GamePlay.Entities;
 
 
 namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
@@ -30,45 +31,97 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
         }
 
         void DoAnimalCatch(
-            Transform basePlayerTransform,
-            PlayerView basePlayerView,
-            AnimalView baseAnimalView)
+            Entity basePlayerEntity,
+            Entity baseAnimalEntity)
         {
-            basePlayerView.transform.SetParent(null);
+            bool isValidEntities =
+                basePlayerEntity.EntityView is PlayerView &&
+                baseAnimalEntity.EntityView is AnimalView;
 
-            Vector3 mountDeltaPosition = baseAnimalView.MountContainerTransform.position - basePlayerView.transform.position;
+            if (!isValidEntities)
+            {
+                string debugText =
+                    "$ > ".ToColor(GoodColors.Red) +
+                    "ERROR trying to DoAnimalCatch!" + "\n" +
+                    "INVALID ENTITIES!" + "\n" +
+                    "";
+                DebugExtension.DevLogWarning(debugText);
+                return;
+            }
+
+            bool isAlreadyDominated = basePlayerEntity.HasDomain(baseAnimalEntity);
+
+            if (isAlreadyDominated)
+            {
+                string debugText =
+                    "$ > ".ToColor(GoodColors.Red) +
+                    "ERROR trying to DoAnimalCatch!" + "\n" +
+                    "ALREADY dominated!" + "\n" +
+                    "";
+                DebugExtension.DevLogWarning(debugText);
+                return;
+            }
+
+            HandlePreviosAnimalDomain(basePlayerEntity);
+
+            PlayerView playerView = (PlayerView)basePlayerEntity.EntityView;
+            AnimalView animalView = (AnimalView)baseAnimalEntity.EntityView;
+            Transform playerTransform = basePlayerEntity.transform;
+            Transform animalTransform = baseAnimalEntity.transform;
+            Transform playerViewTransform = playerView.transform;
+            Transform animalViewTransform = animalView.transform;
+
+            playerViewTransform.SetParent(null);
+
+            Vector3 mountDeltaPosition = animalView.MountContainerTransform.position - playerViewTransform.position;
             Vector3 middleMountDeltaPosition = mountDeltaPosition * 0.5f;
-            Vector3 middlePosition = basePlayerView.transform.position + middleMountDeltaPosition + (Vector3.up * 2);
+            Vector3 middlePosition = playerViewTransform.position + middleMountDeltaPosition + (Vector3.up * 2);
 
-            Tween playerTransformInitialTween = basePlayerTransform.DOMove(baseAnimalView.transform.position, _catchAnimationDuration);
-            basePlayerTransform.DORotate(baseAnimalView.transform.rotation.eulerAngles, _catchAnimationDuration);
+            Tween playerTransformInitialTween = playerTransform.DOMove(animalViewTransform.position, _catchAnimationDuration);
+            playerTransform.DORotate(animalViewTransform.rotation.eulerAngles, _catchAnimationDuration);
 
-            Tween playerViewInitialTween = basePlayerView.transform.DOMoveY(middlePosition.y, _catchAnimationDuration * 0.5f).SetEase(Ease.OutCubic);
-            basePlayerView.transform.DOMoveX(baseAnimalView.MountContainerTransform.position.x, _catchAnimationDuration).SetEase(Ease.OutCubic);
-            basePlayerView.transform.DOMoveZ(baseAnimalView.MountContainerTransform.position.z, _catchAnimationDuration).SetEase(Ease.OutCubic);
+            Tween playerViewInitialTween = playerViewTransform.DOMoveY(middlePosition.y, _catchAnimationDuration * 0.5f).SetEase(Ease.OutCubic);
+            playerViewTransform.DOMoveX(animalView.MountContainerTransform.position.x, _catchAnimationDuration).SetEase(Ease.OutCubic);
+            playerViewTransform.DOMoveZ(animalView.MountContainerTransform.position.z, _catchAnimationDuration).SetEase(Ease.OutCubic);
 
             playerViewInitialTween.onComplete = () =>
             {
-                basePlayerView.transform.SetParent(baseAnimalView.MountContainerTransform);
+                playerViewTransform.SetParent(animalView.MountContainerTransform);
 
-                basePlayerView.PlayMountAnimation();
+                playerView.PlayMountAnimation();
 
-                basePlayerView.transform.DOLocalMoveY(0f, _catchAnimationDuration * 0.5f).SetEase(Ease.InCubic);
-                basePlayerView.transform.DOLocalRotate(Vector3.zero, _catchAnimationDuration * 0.5f).SetEase(Ease.InCubic);
+                playerViewTransform.DOLocalMoveY(0f, _catchAnimationDuration * 0.5f).SetEase(Ease.InCubic);
+                playerViewTransform.DOLocalRotate(Vector3.zero, _catchAnimationDuration * 0.5f).SetEase(Ease.InCubic);
             };
 
             playerTransformInitialTween.onComplete = () =>
             {
-                baseAnimalView.transform.SetParent(basePlayerTransform);
-                baseAnimalView.transform.DOLocalMove(Vector3.zero, 0.1f);
-                baseAnimalView.transform.DOLocalRotate(Vector3.zero, 0.1f);
+                baseAnimalEntity.transform.SetParent(playerTransform);
+                baseAnimalEntity.transform.DOLocalMove(Vector3.zero, 0.1f);
+                baseAnimalEntity.transform.DOLocalRotate(Vector3.zero, 0.1f);
 
-                // !!! TODO: CONTINUE FROM HERE!!!!!
-                // !!! TODO: CONTINUE FROM HERE!!!!!
-                // !!! TODO: CONTINUE FROM HERE!!!!!
-                // !!! TODO: CONTINUE FROM HERE!!!!!
-                _playerMovementLogic.AddMovableView(baseAnimalView);
+                basePlayerEntity.AddEntityDomain(baseAnimalEntity);
             };
+        }
+
+        void HandlePreviosAnimalDomain(Entity basePlayerEntity)
+        {
+            List<Entity> dominatedEntitiesList = basePlayerEntity.GetDominatedEntitiesList();
+
+            foreach (Entity dominatedEntity in dominatedEntitiesList)
+            {
+                dominatedEntity.DoIfNotNull(() =>
+                {
+                    bool isAnimal = dominatedEntity is AnimalEntity;
+                    if (isAnimal)
+                    {
+                        basePlayerEntity.RemoveEntityDomain(dominatedEntity);
+
+                        dominatedEntity.transform.SetParent(null);
+                        basePlayerEntity.EntityView.transform.SetParent(basePlayerEntity.transform);
+                    }
+                });
+            }
         }
     }
 }
