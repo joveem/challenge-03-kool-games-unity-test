@@ -19,7 +19,7 @@ using KoolGames.Test03.GamePlay.Entities;
 using UnityEngine.PlayerLoop;
 
 
-namespace PackageName.MajorContext.MinorContext
+namespace KoolGames.Test03.GamePlay.GameModes
 {
     public partial class AnimalsMerging : MonoBehaviour
     {
@@ -30,12 +30,16 @@ namespace PackageName.MajorContext.MinorContext
                 _capturingTrigger.OnTriggerEnterCallback += OnEnterCapturingArea;
                 _capturingTrigger.OnTriggerExitCallback += OnExitCapturingArea;
             });
+
+            _mergeStationTrigger.DoIfNotNull(
+                () => _mergeStationTrigger.OnTriggerEnterCallback += OnEnterMergeStation);
         }
 
         void OnEnterCapturingArea(Collider collider)
         {
             if (collider.tag.Equals("animal"))
             {
+                DebugExtension.DevLog("AAA");
                 AnimalEntity animalEntity = collider.GetComponent<AnimalEntity>();
                 TryToAddAnimalToCapturingArea(animalEntity);
             }
@@ -48,6 +52,12 @@ namespace PackageName.MajorContext.MinorContext
                 AnimalEntity animalEntity = collider.GetComponent<AnimalEntity>();
                 TryToRemoveAnimalToCapturingArea(animalEntity);
             }
+        }
+
+        void OnEnterMergeStation(Collider collider)
+        {
+            if (collider.tag.Equals("player"))
+                TryToDoAnimalDelivery();
         }
     }
 }

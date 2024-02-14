@@ -36,6 +36,7 @@ namespace KoolGames.Test03.GamePlay.Entities.Views
         [Space(5), Header("[ Parts ]"), Space(10)]
 
         [SerializeField] List<GameObject> _ropePartsList = new List<GameObject>();
+        public RopeView RopeView;
 
 
         // [Space(5), Header("[ Configs ]"), Space(10)]

@@ -25,11 +25,6 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
 {
     public partial class Asmb_GameSceneController : MonoBehaviour
     {
-        void SetInitialState()
-        {
-            // _baseTankEntityView.DoIfNotNull(() => _baseTankEntityView.IsLocal = true);
-        }
-
         void DoAnimalCatch(
             Entity basePlayerEntity,
             Entity baseAnimalEntity)

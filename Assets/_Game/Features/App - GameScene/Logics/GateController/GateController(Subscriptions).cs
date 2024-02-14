@@ -26,20 +26,20 @@ namespace KoolGames.Test03.GamePlay.GameScene
         {
             _areaTrigger.DoIfNotNull(() =>
             {
-                _areaTrigger.OnTriggerEnterCallback += OnAreaEnter;
+                _areaTrigger.OnTriggerStayCallback += OnStayEnter;
                 _areaTrigger.OnTriggerExitCallback += OnAreaExit;
             });
         }
 
-        void OnAreaEnter(Collider collider)
+        void OnStayEnter(Collider collider)
         {
-            if (collider.tag.Equals("player"))
+            if (collider.tag.Equals("player") || collider.tag.Equals("animal"))
                 PlayOpenAnimation();
         }
 
         void OnAreaExit(Collider collider)
         {
-            if (collider.tag.Equals("player"))
+            if (collider.tag.Equals("player") || collider.tag.Equals("animal"))
                 PlayCloseAnimation();
         }
     }

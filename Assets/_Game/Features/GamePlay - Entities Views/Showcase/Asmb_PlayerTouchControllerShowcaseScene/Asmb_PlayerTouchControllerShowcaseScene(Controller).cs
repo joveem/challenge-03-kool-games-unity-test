@@ -26,11 +26,6 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
 {
     public partial class Asmb_PlayerTouchControllerShowcaseScene : MonoBehaviour
     {
-        void SetInitialState()
-        {
-            // _baseTankEntityView.DoIfNotNull(() => _baseTankEntityView.IsLocal = true);
-        }
-
         void DoAnimalMount(
             Entity basePlayerEntity,
             Entity baseAnimalEntity)

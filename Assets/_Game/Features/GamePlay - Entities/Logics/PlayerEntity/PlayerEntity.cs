@@ -15,7 +15,7 @@ using JovDK.SafeActions;
 using JovDK.SerializingTools.Json;
 
 // from project
-// ...
+using KoolGames.Test03.GamePlay.Entities.Views;
 
 
 namespace KoolGames.Test03.GamePlay.Entities
@@ -58,9 +58,9 @@ namespace KoolGames.Test03.GamePlay.Entities
 
         // }
 
-        // void FixedUpdate()
-        // {
-
-        // }
+        void FixedUpdate()
+        {
+            HandleAnimation(Time.fixedDeltaTime);
+        }
     }
 }

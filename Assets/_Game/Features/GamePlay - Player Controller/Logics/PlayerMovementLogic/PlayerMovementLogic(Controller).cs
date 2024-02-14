@@ -88,38 +88,38 @@ namespace KoolGames.Test03.GamePlay.PlayerController
 
         // [SerializeField] Transform _playerView
 
-        void HandleAnimation()
-        {
-            if (_playerEntity == null || _playerEntity.Rigidbody == null)
-            {
-                string debugText =
-                    "$ > ".ToColor(GoodColors.Red) +
-                    "ERROR trying to HandleAnimation!" + "\n" +
-                    "_playerEntity OR _playerEntity.Rigidbody IS NULL!" + "\n" +
-                    "";
-                DebugExtension.DevLog(debugText);
-                return;
-            }
+        // void HandleAnimation()
+        // {
+        //     if (_playerEntity == null || _playerEntity.Rigidbody == null)
+        //     {
+        //         string debugText =
+        //             "$ > ".ToColor(GoodColors.Red) +
+        //             "ERROR trying to HandleAnimation!" + "\n" +
+        //             "_playerEntity OR _playerEntity.Rigidbody IS NULL!" + "\n" +
+        //             "";
+        //         DebugExtension.DevLog(debugText);
+        //         return;
+        //     }
 
-            Rigidbody playerRigidbody = _playerEntity.Rigidbody;
+        //     Rigidbody playerRigidbody = _playerEntity.Rigidbody;
 
-            Vector3 lastPosition = _playerEntity.LastPosition;
-            Vector3 realVelocity = (playerRigidbody.position - lastPosition) / Time.fixedDeltaTime;
-            float playerZVelocity = realVelocity.magnitude;
-            _playerEntity.LastPosition = playerRigidbody.position;
+        //     Vector3 lastPosition = _playerEntity.LastPosition;
+        //     Vector3 realVelocity = (playerRigidbody.position - lastPosition) / Time.fixedDeltaTime;
+        //     float playerZVelocity = realVelocity.magnitude;
+        //     _playerEntity.LastPosition = playerRigidbody.position;
 
-            if (_playerEntity.EntityView is MovableEntityView movableEntityView)
-                movableEntityView.ApplyZVelocity(playerZVelocity);
+        //     if (_playerEntity.EntityView is MovableEntityView movableEntityView)
+        //         movableEntityView.ApplyZVelocity(playerZVelocity);
 
-            List<Entity> underDomainEntities = _playerEntity.GetDominatedEntitiesList();
-            foreach (Entity dominatedEntity in underDomainEntities)
-            {
-                dominatedEntity.DoIfNotNull(() =>
-                {
-                    if (dominatedEntity.EntityView is MovableEntityView movableEntityView)
-                        movableEntityView.ApplyZVelocity(playerZVelocity);
-                });
-            }
-        }
+        //     List<Entity> underDomainEntities = _playerEntity.GetDominatedEntitiesList();
+        //     foreach (Entity dominatedEntity in underDomainEntities)
+        //     {
+        //         dominatedEntity.DoIfNotNull(() =>
+        //         {
+        //             if (dominatedEntity.EntityView is MovableEntityView movableEntityView)
+        //                 movableEntityView.ApplyZVelocity(playerZVelocity);
+        //         });
+        //     }
+        // }
     }
 }

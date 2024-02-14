@@ -71,7 +71,7 @@ namespace KoolGames.Test03.GamePlay.PlayerController
         void FixedUpdate()
         {
             HandleMovement();
-            HandleAnimation();
+            // HandleAnimation();
         }
 
         // void FixedUpdate()

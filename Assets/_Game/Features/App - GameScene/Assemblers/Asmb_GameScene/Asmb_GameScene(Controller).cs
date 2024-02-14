@@ -19,26 +19,33 @@ using JovDK.SerializingTools.Json;
 // ...
 
 
-namespace PackageName.MajorContext.MinorContext
+namespace KoolGames.Test03.GamePlay
 {
     public partial class Asmb_GameScene : MonoBehaviour
     {
         void SetInitialState()
         {
-            // PlaySphereRotationAnimation();
             RegisterSpatialUIItems();
         }
 
-        // void PlaySphereRotationAnimation()
-        // {
-        //     Tween sphereTween =
-        //         _sphereRotationPivot.DORotate(
-        //             new Vector3(0f, 360, 0f),
-        //             2f,
-        //             RotateMode.FastBeyond360).SetEase(Ease.Linear);
+        void SetupDependencies()
+        {
+            SetupBotsController();
+            SetupAnimalsMerging();
+        }
 
-        //     sphereTween.SetLoops(-1);
-        // }
+        void SetupBotsController()
+        {
+            _botsController.AnimalsListGetter = _animalsMerging.GetCurrentAnimalsDatasList;
+        }
+
+        void SetupAnimalsMerging()
+        {
+            _animalsMerging.SetPlayerEntity(_playerEntity);
+            _animalsMerging.SetMapData(_mapData);
+            _animalsMerging.SetPathNodesHandler(_pathNodesHandler);
+            _animalsMerging.SetMontaryLogic(_montaryLogic);
+        }
 
         void RegisterSpatialUIItems()
         {

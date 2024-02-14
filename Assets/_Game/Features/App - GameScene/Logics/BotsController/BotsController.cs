@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,12 +16,13 @@ using JovDK.SafeActions;
 using JovDK.SerializingTools.Json;
 
 // from project
-// ...
+using KoolGames.Test03.GamePlay.Entities;
+using KoolGames.Test03.GamePlay.GameModes;
 
 
-namespace PackageName.MajorContext.MinorContext
+namespace KoolGames.Test03.GamePlay
 {
-    public partial class CatchingHandler : MonoBehaviour
+    public partial class BotsController : MonoBehaviour
     {
 
         // [Space(5), Header("[ Dependencies ]"), Space(10)]
@@ -28,14 +30,14 @@ namespace PackageName.MajorContext.MinorContext
         // bool _dependencies;
 
 
-        // [Space(5), Header("[ State ]"), Space(10)]
+        [Space(5), Header("[ State ]"), Space(10)]
 
-        // bool _state;
+        public AnimalsListGetter AnimalsListGetter;
 
 
-        // [Space(5), Header("[ Parts ]"), Space(10)]
+        [Space(5), Header("[ Parts ]"), Space(10)]
 
-        // bool _parts;
+        Dictionary<AnimalEntity, AnimalData> _currentAnimalsList = new Dictionary<AnimalEntity, AnimalData>();
 
 
         // [Space(5), Header("[ Configs ]"), Space(10)]
@@ -53,14 +55,14 @@ namespace PackageName.MajorContext.MinorContext
 
         // }
 
-        void Update()
-        {
-            HandleCatchStatus();
-        }
-
-        // void FixedUpdate()
+        // void Update()
         // {
 
         // }
+
+        void FixedUpdate()
+        {
+            HandleBotsFixed();
+        }
     }
 }

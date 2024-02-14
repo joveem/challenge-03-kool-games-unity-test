@@ -28,9 +28,36 @@ namespace KoolGames.Test03.GamePlay.Entities
         // bool _dependencies;
 
 
-        // [Space(5), Header("[ State ]"), Space(10)]
+        [Space(5), Header("[ State ]"), Space(10)]
 
-        // bool _state;
+        // idle
+        public float RemaingIdleTime = 0f;
+        // domain
+
+        public Entity OwnerEntity = null;
+        public Entity DomineeringEntity = null;
+        public bool IsDominated = false;
+        public bool IsMounted = false;
+        public bool IsBeeingDominated = false;
+        public float DominationTryCooldown = 0f;
+        public float CurrentDomainForce = 0f;
+        // public float RequiredDomainForce = 5f;
+        public float RequiredDomainForce = 1f;
+        // movement
+        public float CurrentZMoveVelocityFactor = 0f;
+        public float MaxZMoveVelocity = 0.0001f;
+        public float ZMoveAccelerationFactor = 3f;
+
+        // rotation
+        public float CurrentYRotationVelocityFactor = 0f;
+        public float MaxYRotationVelocity = 180f;
+        public float YRotationAccelerationFactor = 5f;
+
+        // path following
+        public float GoalMaxDistance = 10f;
+        public Vector3 CurrentGoalPosition = default;
+        public List<GraphPathNode> CurrentPathNodesList = new List<GraphPathNode>();
+        public int CurrentPathIndex = -1;
 
 
         // [Space(5), Header("[ Parts ]"), Space(10)]
@@ -58,9 +85,10 @@ namespace KoolGames.Test03.GamePlay.Entities
 
         // }
 
-        // void FixedUpdate()
-        // {
-
-        // }
+        void FixedUpdate()
+        {
+            if (!IsMounted)
+                HandleAnimation(Time.fixedDeltaTime);
+        }
     }
 }

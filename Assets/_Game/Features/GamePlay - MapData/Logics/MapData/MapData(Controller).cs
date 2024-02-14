@@ -18,7 +18,7 @@ using JovDK.SerializingTools.Json;
 // ...
 
 
-namespace PackageName.MajorContext.MinorContext
+namespace KoolGames.Test03.GamePlay.Scenario
 {
     public partial class MapData : MonoBehaviour
     {

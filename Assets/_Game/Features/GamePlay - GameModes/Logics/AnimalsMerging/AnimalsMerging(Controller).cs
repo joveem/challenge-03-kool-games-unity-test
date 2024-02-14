@@ -20,15 +20,44 @@ using JovDK.SerializingTools.Json;
 using KoolGames.Test03.GamePlay.Entities;
 using JovDK.Physics.Triggers;
 using KoolGames.Test03.GamePlay.Entities.Views;
+using System.Linq;
 
 
-namespace PackageName.MajorContext.MinorContext
+namespace KoolGames.Test03.GamePlay.GameModes
 {
     public partial class AnimalsMerging : MonoBehaviour
     {
         void ApplyInitialState()
         {
+            RegisterSpatialUIItems();
             InstantiateAnimals(_animalsPrefabsList, _initialAnimalsAmount);
+        }
+
+        void RegisterSpatialUIItems()
+        {
+            _spatialUIHandler.DoIfNotNull(() =>
+            {
+                Vector3 positionDelta = new Vector3(0f, 2f, 0f);
+                _spatialUIHandler.RegisterSpatialUIItems(_playerEntity.transform, _maxCarryingWarning, positionDelta);
+            });
+        }
+
+        public List<AnimalData> GetCurrentAnimalsDatasList()
+        {
+            List<AnimalData> value = new List<AnimalData>();
+
+            value = _currentAnimalsList.Values.ToList();
+
+            return value;
+        }
+
+        public List<AnimalEntity> GetCurrentAnimalsEntitiesList()
+        {
+            List<AnimalEntity> value = new List<AnimalEntity>();
+
+            value = _currentAnimalsList.Keys.ToList();
+
+            return value;
         }
 
         void InstantiateAnimals(
@@ -109,12 +138,14 @@ namespace PackageName.MajorContext.MinorContext
 
         [SerializeField] MeshRenderer _capturingAreaMesh;
         [SerializeField] TriggerEmitter _capturingTrigger;
+        [SerializeField] TriggerEmitter _mergeStationTrigger;
+        [SerializeField] RectTransform _maxCarryingWarning;
         Dictionary<AnimalEntity, AnimalData> _inCapturingAreaAnimalsList = new Dictionary<AnimalEntity, AnimalData>();
 
         void HandleCapturingArea()
         {
             foreach (AnimalData animalData in _currentAnimalsList.Values)
-                animalData.DoIfNotNull(() => animalData.IsBeeingDominated = false);
+                animalData.DoIfNotNull(() => animalData.AnimalEntity.IsBeeingDominated = false);
 
             int capturingAnimalsAmount = 0;
 
@@ -123,9 +154,10 @@ namespace PackageName.MajorContext.MinorContext
                 animalData.DoIfNotNull(
                     () =>
                     {
-                        if (!animalData.IsDominated)
+                        if (!animalData.AnimalEntity.IsDominated)
                         {
-                            animalData.IsBeeingDominated = true;
+                            animalData.AnimalEntity.IsBeeingDominated = true;
+                            animalData.AnimalEntity.DomineeringEntity = _playerEntity;
                             capturingAnimalsAmount++;
                         }
                     });
@@ -139,37 +171,46 @@ namespace PackageName.MajorContext.MinorContext
                 playerView.PlayCatchAnimation();
             else
                 playerView.StopCatchAnimation();
+
+            int carryingAmount = GetCurrentCarryingAmount();
+            bool hasReachedMaxCarryingAmount = carryingAmount >= 2;
+            bool hasToShowMaxCarryingWarning = hasReachedMaxCarryingAmount && isCapturingAnimals;
+            _maxCarryingWarning.SetActiveIfNotNull(hasToShowMaxCarryingWarning);
         }
 
         void HandleCapturing()
         {
             foreach (AnimalData animalData in _currentAnimalsList.Values)
             {
+                int carryingAmount = GetCurrentCarryingAmount();
+                if (carryingAmount >= 2)
+                    return;
+
                 animalData.DoIfNotNull(() =>
                 {
                     Slider domainSlider = animalData.DomainSlider;
                     bool showDomainSlider = false;
 
-                    if (!animalData.IsDominated)
+                    if (!animalData.AnimalEntity.IsDominated)
                     {
                         // if (true) // TODO: REVIEW THIS!
-                        if (animalData.IsBeeingDominated)
+                        if (animalData.AnimalEntity.IsBeeingDominated)
                         {
                             // TODO: REVIEW THIS!
-                            animalData.CurrentDomainForce += Time.deltaTime;
+                            animalData.AnimalEntity.CurrentDomainForce += Time.deltaTime;
 
-                            if (animalData.CurrentDomainForce >= animalData.RequiredDomainForce)
-                                DoPlayerCapturing(_playerEntity, animalData);
+                            if (animalData.AnimalEntity.CurrentDomainForce >= animalData.AnimalEntity.RequiredDomainForce)
+                                DoAnimalCapturing(_playerEntity, animalData);
                             else
                             {
                                 showDomainSlider = true;
 
-                                float domainFactor = animalData.CurrentDomainForce / animalData.RequiredDomainForce;
+                                float domainFactor = animalData.AnimalEntity.CurrentDomainForce / animalData.AnimalEntity.RequiredDomainForce;
                                 domainSlider.DoIfNotNull(() => domainSlider.value = domainFactor);
                             }
                         }
                         else
-                            animalData.CurrentDomainForce = 0f;
+                            animalData.AnimalEntity.CurrentDomainForce = 0f;
                     }
 
                     domainSlider.SetActiveIfNotNull(showDomainSlider);
@@ -177,13 +218,90 @@ namespace PackageName.MajorContext.MinorContext
             }
         }
 
-        void DoPlayerCapturing(
+        [SerializeField] List<Transform> _mergePositionsTransformsList = new List<Transform>();
+
+
+        void DoAnimalCapturing(
             PlayerEntity playerEntity,
             AnimalData animalData)
         {
-            animalData.IsDominated = true;
-            animalData.IsBeeingDominated = false;
-            animalData.CurrentDomainForce = 0f;
+            int initialCarryingAmount = GetCurrentCarryingAmount();
+
+            animalData.AnimalEntity.IsDominated = true;
+            animalData.AnimalEntity.OwnerEntity = playerEntity;
+            animalData.AnimalEntity.IsBeeingDominated = false;
+            animalData.AnimalEntity.CurrentDomainForce = 0f;
+
+            if (initialCarryingAmount == 0)
+            {
+                animalData.AnimalEntity.IsMounted = true;
+                _montaryLogic.DoAnimalMount(playerEntity, animalData.AnimalEntity);
+            }
+            else
+                DoAnimalCarrying(playerEntity, animalData);
+        }
+
+        void DoAnimalCarrying(
+            PlayerEntity playerEntity,
+            AnimalData animalData)
+        {
+            PlayerView playerView = (PlayerView)playerEntity.EntityView;
+            RopeView ropeView = playerView.RopeView;
+
+            ropeView.ShowRope();
+            ropeView.SetEndPositionTransform(animalData.AnimalEntity.transform);
+            ropeView.SetEndPositionDelta(new Vector3(0f, 1f, 0f));
+        }
+
+        void TryToDoAnimalDelivery()
+        {
+            int carryingAmount = GetCurrentCarryingAmount();
+
+            bool hasEnoughAnimals = carryingAmount >= 2;
+
+            if (hasEnoughAnimals)
+            {
+                _montaryLogic.DoAnimalDismount(_playerEntity);
+                List<AnimalData> carryingAnimalsList = GetCurrentCarryingAnimalsList();
+
+                PlayMergeAnimation(carryingAnimalsList);
+            }
+        }
+
+        [SerializeField] float _mergeTranslateDuration = 0.5f;
+        [SerializeField] float _mergeAnimationDuration = 5f;
+
+        async void PlayMergeAnimation(List<AnimalData> animalsList)
+        {
+            if (animalsList.Count < 2)
+            {
+                string debugText =
+                    "$$ > ".ToColor(GoodColors.Red) +
+                    "ERROR trying to PlayMergeAnimation" + "\n" +
+                    "NOT ENOUGHT animals on list!" + "\n" +
+                    "animalsList.Count =" + animalsList.Count + "\n" +
+                    "";
+                DebugExtension.DevLogWarning(debugText);
+                return;
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                AnimalData animalData = animalsList[i];
+                Transform positionPivot = _mergePositionsTransformsList[i];
+
+                float waitSeconds = _mergeTranslateDuration + _mergeAnimationDuration;
+                await Task.Delay((int)(waitSeconds * 1000));
+                TryToDestroyAnimal(animalData.AnimalEntity);
+            }
+        }
+
+        List<AnimalData> GetCurrentCarryingAnimalsList()
+        {
+            List<AnimalData> value = new List<AnimalData>();
+
+
+            return value;
         }
     }
 }

@@ -15,17 +15,16 @@ using JovDK.SafeActions;
 using JovDK.SerializingTools.Json;
 
 // from project
-// ...
+
+using KoolGames.Test03.GamePlay.Entities;
+using KoolGames.Test03.GamePlay.Entities.Views;
 
 
-namespace PackageName.MajorContext.MinorContext
+namespace KoolGames.Test03.GamePlay.Montary
 {
-    public partial class CatchingHandler : MonoBehaviour
+    public partial class DismountResult
     {
-
-        void HandleCatchStatus()
-        {
-
-        }
+        public bool HasDismountedSomeAnimal = false;
+        public AnimalEntity DismountedAnimalEntity = null;
     }
 }

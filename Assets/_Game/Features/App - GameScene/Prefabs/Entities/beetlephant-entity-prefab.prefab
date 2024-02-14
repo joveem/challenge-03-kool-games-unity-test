@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1370488480739773107}
   m_Layer: 0
   m_Name: beetlephant-entity-prefab
-  m_TagString: Untagged
+  m_TagString: animal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51,6 +51,25 @@ MonoBehaviour:
   EntityView: {fileID: 1370488481170662648}
   Rigidbody: {fileID: 1370488480739773108}
   Collider: {fileID: 1370488480739773107}
+  RemaingIdleTime: 0
+  OwnerEntity: {fileID: 0}
+  DomineeringEntity: {fileID: 0}
+  IsDominated: 0
+  IsMounted: 0
+  IsBeeingDominated: 0
+  DominationTryCooldown: 0
+  CurrentDomainForce: 0
+  RequiredDomainForce: 1
+  CurrentZMoveVelocityFactor: 0
+  MaxZMoveVelocity: 7
+  ZMoveAccelerationFactor: 3
+  CurrentYRotationVelocityFactor: 0
+  MaxYRotationVelocity: 180
+  YRotationAccelerationFactor: 5
+  GoalMaxDistance: 10
+  CurrentGoalPosition: {x: 0, y: 0, z: 0}
+  CurrentPathNodesList: []
+  CurrentPathIndex: -1
 --- !u!54 &1370488480739773108
 Rigidbody:
   m_ObjectHideFlags: 0

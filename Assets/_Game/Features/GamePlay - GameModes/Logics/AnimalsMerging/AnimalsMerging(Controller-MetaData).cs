@@ -19,15 +19,17 @@ using JovDK.SerializingTools.Json;
 
 // from project
 using KoolGames.Test03.GamePlay.Entities;
+using KoolGames.Test03.GamePlay.Scenario;
 
 
-namespace PackageName.MajorContext.MinorContext
+namespace KoolGames.Test03.GamePlay.GameModes
 {
     public partial class AnimalsMerging : MonoBehaviour
     {
         [SerializeField] RectTransform _spatialUIContainer;
         [SerializeField] Slider _domainSliderPrefab;
         [SerializeField] SpatialUIHandler _spatialUIHandler;
+
 
         public void SetSpatialUIHandler(SpatialUIHandler spatialUIHandler)
         {
@@ -50,8 +52,23 @@ namespace PackageName.MajorContext.MinorContext
                 });
 
             AnimalData animalData = new AnimalData(entityInstance, domainSlider);
+            animalData.StateMachine = GetDefaultBotStateMachine(entityInstance, _pathNodesHandler, _mapData);
 
             _currentAnimalsList.Add(entityInstance, animalData);
+        }
+
+        void TryToDestroyAnimal(AnimalEntity animalEntity)
+        {
+            if (_currentAnimalsList.ContainsKey(animalEntity))
+            {
+                AnimalData animalData = _currentAnimalsList[animalEntity];
+
+                _spatialUIHandler.RemoveUIItemRegister((RectTransform)animalData.DomainSlider.transform);
+                _currentAnimalsList.Remove(animalEntity);
+
+                Destroy(animalData.AnimalEntity);
+                Destroy(animalData.DomainSlider);
+            }
         }
 
         void TryToAddAnimalToCapturingArea(AnimalEntity animalEntity)
@@ -112,6 +129,23 @@ namespace PackageName.MajorContext.MinorContext
                     "";
                 DebugExtension.DevLogWarning(debugText);
             }
+        }
+
+        int GetCurrentCarryingAmount()
+        {
+            int value = 0;
+
+            foreach (AnimalData animalData in _currentAnimalsList.Values)
+            {
+                animalData.DoIfNotNull(
+                    () =>
+                    {
+                        if (animalData.AnimalEntity.IsDominated)
+                            value++;
+                    });
+            }
+
+            return value;
         }
     }
 }

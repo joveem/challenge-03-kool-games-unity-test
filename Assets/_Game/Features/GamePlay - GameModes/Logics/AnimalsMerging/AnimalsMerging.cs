@@ -16,24 +16,26 @@ using JovDK.SerializingTools.Json;
 
 // from project
 using KoolGames.Test03.GamePlay.Entities;
-using UnityEngine.PlayerLoop;
+using KoolGames.Test03.GamePlay.Montary;
+using KoolGames.Test03.GamePlay.Scenario;
 
 
-namespace PackageName.MajorContext.MinorContext
+namespace KoolGames.Test03.GamePlay.GameModes
 {
     public partial class AnimalsMerging : MonoBehaviour
     {
 
         [Space(5), Header("[ Dependencies ]"), Space(10)]
 
-        [SerializeField] MapData _mapData = null;
+        MapData _mapData = null;
+        PathNodesHandler _pathNodesHandler = null;
+        MontaryLogic _montaryLogic = null;
 
 
         [Space(5), Header("[ State ]"), Space(10)]
 
-        [SerializeField] PlayerEntity _playerEntity;
+        PlayerEntity _playerEntity;
         Dictionary<AnimalEntity, AnimalData> _currentAnimalsList = new Dictionary<AnimalEntity, AnimalData>();
-        // List<AnimalData> _currentAnimalsList = new List<AnimalData>();
 
 
         // [Space(5), Header("[ Parts ]"), Space(10)]

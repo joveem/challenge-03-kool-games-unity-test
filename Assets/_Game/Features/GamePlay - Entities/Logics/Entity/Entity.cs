@@ -66,5 +66,39 @@ namespace KoolGames.Test03.GamePlay.Entities
         // {
 
         // }
+
+        protected void HandleAnimation(float deltaTime)
+        {
+            if (Rigidbody == null)
+            {
+                string debugText =
+                    "$ > ".ToColor(GoodColors.Red) +
+                    "ERROR trying to HandleAnimation!" + "\n" +
+                    "_playerEntity.Rigidbody IS NULL!" + "\n" +
+                    "";
+                DebugExtension.DevLog(debugText);
+                return;
+            }
+
+            Rigidbody playerRigidbody = Rigidbody;
+
+            Vector3 lastPosition = LastPosition;
+            Vector3 realVelocity = (playerRigidbody.position - lastPosition) / deltaTime;
+            float playerZVelocity = realVelocity.magnitude;
+            LastPosition = playerRigidbody.position;
+
+            if (EntityView is MovableEntityView movableEntityView)
+                movableEntityView.ApplyZVelocity(playerZVelocity);
+
+            List<Entity> underDomainEntities = GetDominatedEntitiesList();
+            foreach (Entity dominatedEntity in underDomainEntities)
+            {
+                dominatedEntity.DoIfNotNull(() =>
+                {
+                    if (dominatedEntity.EntityView is MovableEntityView movableEntityView)
+                        movableEntityView.ApplyZVelocity(playerZVelocity);
+                });
+            }
+        }
     }
 }
