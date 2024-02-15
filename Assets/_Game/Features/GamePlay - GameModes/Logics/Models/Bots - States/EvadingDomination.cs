@@ -51,6 +51,17 @@ namespace KoolGames.Test03.GamePlay.GameModes
             else
                 _animalEntity.DominationTryCooldown -= deltaTime;
 
+            if (_animalEntity.DomineeringEntity == null)
+            {
+                string debugText =
+                    "$$ > ".ToColor(GoodColors.Red) +
+                    "ERROR trying to Tick" + "\n" +
+                    "DomineeringEntity IS NULL!" + "\n" +
+                    "";
+                DebugExtension.DevLogWarning(debugText);
+                return;
+            }
+
             Vector3 opositeDirection = GetDomineeringOpositeDirectionPosition();
 
             _botPathHandler.SetGoalPosition(opositeDirection, true);

@@ -122,16 +122,16 @@ namespace KoolGames.Test03.GamePlay.Bots
                 if (deltaYRotation < 0f)
                     currentXInput *= -1f;
 
-                if (BaseAnimalEntity.gameObject.activeInHierarchy)
-                {
-                    DebugExtension.DevLog(
-                        "current-y-rotation = " + currentYRotation.ToString("0.00") + " | " +
-                        "goal-y-rotation = " + destinationYRotation.ToString("0.00") + " | " +
-                        "delta-y-rotation = " + deltaYRotation.ToString("0.00") + " | " +
-                        "x-input = " + currentXInput.ToString("0.00") + " | " +
-                        "y-rotation-vel = " + BaseAnimalEntity.CurrentYRotationVelocityFactor.ToString("0.00") + " | " +
-                        "");
-                }
+                // if (BaseAnimalEntity.gameObject.activeInHierarchy)
+                // {
+                //     DebugExtension.DevLog(
+                //         "current-y-rotation = " + currentYRotation.ToString("0.00") + " | " +
+                //         "goal-y-rotation = " + destinationYRotation.ToString("0.00") + " | " +
+                //         "delta-y-rotation = " + deltaYRotation.ToString("0.00") + " | " +
+                //         "x-input = " + currentXInput.ToString("0.00") + " | " +
+                //         "y-rotation-vel = " + BaseAnimalEntity.CurrentYRotationVelocityFactor.ToString("0.00") + " | " +
+                //         "");
+                // }
             }
 
             currentXInput *= maxVelocityMultiplier;

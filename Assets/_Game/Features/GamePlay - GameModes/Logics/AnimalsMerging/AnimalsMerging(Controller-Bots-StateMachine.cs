@@ -40,6 +40,7 @@ namespace KoolGames.Test03.GamePlay.GameModes
             Dominated dominated = new Dominated(animalEntity, botPathHandler, mapData);
             IdleMovement idleMovement = new IdleMovement(animalEntity, botPathHandler, mapData);
             EvadingDomination evadingDomination = new EvadingDomination(animalEntity, botPathHandler, mapData);
+            Static staticState = new Static();
 
             // transitions
             value.AddTransition(idle, idleMovement, HasIdleFinished());
@@ -49,16 +50,19 @@ namespace KoolGames.Test03.GamePlay.GameModes
             // any transitions
             value.AddAnyTransition(evadingDomination, IsBeeingDominated());
             value.AddAnyTransition(dominated, IsDominated());
+            value.AddAnyTransition(dominated, IsDominated());
+            value.AddAnyTransition(staticState, IsStatic());
 
             value.SetState(idle);
 
             return value;
 
-            Func<bool> IsDominated() => () => animalEntity.IsDominated;
-            Func<bool> HasIdleFinished() => () => animalEntity.RemaingIdleTime <= 0;
-            Func<bool> IsBeeingDominated() => () => !animalEntity.IsDominated && (animalEntity.IsBeeingDominated || animalEntity.DominationTryCooldown > 0f);
-            Func<bool> IsNotBeeingDominated() => () => !animalEntity.IsBeeingDominated && animalEntity.DominationTryCooldown <= 0f;
-            Func<bool> HasReachedPathGoal() => () => botPathHandler.HasReachedPathGoal();
+            Func<bool> IsDominated() => () => !animalEntity.IsStatic && animalEntity.IsDominated;
+            Func<bool> HasIdleFinished() => () => !animalEntity.IsStatic && animalEntity.RemaingIdleTime <= 0;
+            Func<bool> IsBeeingDominated() => () => !animalEntity.IsStatic && !animalEntity.IsDominated && (animalEntity.IsBeeingDominated || animalEntity.DominationTryCooldown > 0f);
+            Func<bool> IsNotBeeingDominated() => () => !animalEntity.IsStatic && !animalEntity.IsBeeingDominated && animalEntity.DominationTryCooldown <= 0f;
+            Func<bool> HasReachedPathGoal() => () => !animalEntity.IsStatic && botPathHandler.HasReachedPathGoal();
+            Func<bool> IsStatic() => () => animalEntity.IsStatic;
         }
     }
 }

@@ -30,10 +30,12 @@ namespace KoolGames.Test03.GamePlay.Entities
 
         [Space(5), Header("[ State ]"), Space(10)]
 
+        public bool IsStatic = false;
+
         // idle
         public float RemaingIdleTime = 0f;
-        // domain
 
+        // domain
         public Entity OwnerEntity = null;
         public Entity DomineeringEntity = null;
         public bool IsDominated = false;
@@ -43,6 +45,7 @@ namespace KoolGames.Test03.GamePlay.Entities
         public float CurrentDomainForce = 0f;
         // public float RequiredDomainForce = 5f;
         public float RequiredDomainForce = 1f;
+
         // movement
         public float CurrentZMoveVelocityFactor = 0f;
         public float MaxZMoveVelocity = 0.0001f;

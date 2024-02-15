@@ -39,7 +39,6 @@ namespace KoolGames.Test03.GamePlay.GameModes
         {
             if (collider.tag.Equals("animal"))
             {
-                DebugExtension.DevLog("AAA");
                 AnimalEntity animalEntity = collider.GetComponent<AnimalEntity>();
                 TryToAddAnimalToCapturingArea(animalEntity);
             }

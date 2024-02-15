@@ -66,8 +66,18 @@ namespace KoolGames.Test03.GamePlay.GameModes
                 _spatialUIHandler.RemoveUIItemRegister((RectTransform)animalData.DomainSlider.transform);
                 _currentAnimalsList.Remove(animalEntity);
 
-                Destroy(animalData.AnimalEntity);
-                Destroy(animalData.DomainSlider);
+                Destroy(animalData.AnimalEntity.gameObject);
+                Destroy(animalData.DomainSlider.gameObject);
+            }
+            else
+            {
+                string debugText =
+                    "$ > ".ToColor(GoodColors.Red) +
+                    "ERROR trying to TryToDestroyAnimal" + "\n" +
+                    "UNEXPECTED animalEntity!" + "\n" +
+                    "";
+                DebugExtension.DevLogWarning(debugText);
+                Destroy(animalEntity.gameObject);
             }
         }
 

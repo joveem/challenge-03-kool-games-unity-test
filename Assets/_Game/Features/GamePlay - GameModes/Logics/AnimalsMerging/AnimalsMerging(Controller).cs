@@ -21,6 +21,7 @@ using KoolGames.Test03.GamePlay.Entities;
 using JovDK.Physics.Triggers;
 using KoolGames.Test03.GamePlay.Entities.Views;
 using System.Linq;
+using DG.Tweening;
 
 
 namespace KoolGames.Test03.GamePlay.GameModes
@@ -191,12 +192,10 @@ namespace KoolGames.Test03.GamePlay.GameModes
                     Slider domainSlider = animalData.DomainSlider;
                     bool showDomainSlider = false;
 
-                    if (!animalData.AnimalEntity.IsDominated)
+                    if (!animalData.AnimalEntity.IsStatic && !animalData.AnimalEntity.IsDominated)
                     {
-                        // if (true) // TODO: REVIEW THIS!
                         if (animalData.AnimalEntity.IsBeeingDominated)
                         {
-                            // TODO: REVIEW THIS!
                             animalData.AnimalEntity.CurrentDomainForce += Time.deltaTime;
 
                             if (animalData.AnimalEntity.CurrentDomainForce >= animalData.AnimalEntity.RequiredDomainForce)
@@ -225,6 +224,8 @@ namespace KoolGames.Test03.GamePlay.GameModes
             PlayerEntity playerEntity,
             AnimalData animalData)
         {
+            _inCapturingAreaAnimalsList.Remove(animalData.AnimalEntity);
+
             int initialCarryingAmount = GetCurrentCarryingAmount();
 
             animalData.AnimalEntity.IsDominated = true;
@@ -255,14 +256,33 @@ namespace KoolGames.Test03.GamePlay.GameModes
 
         void TryToDoAnimalDelivery()
         {
-            int carryingAmount = GetCurrentCarryingAmount();
+            DebugExtension.DevLog(">");
 
+            int carryingAmount = GetCurrentCarryingAmount();
             bool hasEnoughAnimals = carryingAmount >= 2;
 
             if (hasEnoughAnimals)
             {
                 _montaryLogic.DoAnimalDismount(_playerEntity);
                 List<AnimalData> carryingAnimalsList = GetCurrentCarryingAnimalsList();
+
+                PlayerView playerView = (PlayerView)_playerEntity.EntityView;
+                playerView.RopeView.SetEndPositionTransform(null);
+
+                for (int i = 0; i < 2; i++)
+                {
+                    AnimalData animalData = carryingAnimalsList[i];
+                    AnimalEntity animalEntity = animalData.AnimalEntity;
+
+                    _playerEntity.RemoveEntityDomain(animalEntity);
+                    animalEntity.IsDominated = false;
+                    animalEntity.IsBeeingDominated = false;
+                    animalEntity.OwnerEntity = null;
+                    animalEntity.DomineeringEntity = null;
+                    animalEntity.IsStatic = true;
+                    animalEntity.IsMounted = false;
+                    animalEntity.RemaingIdleTime = 9999f;
+                }
 
                 PlayMergeAnimation(carryingAnimalsList);
             }
@@ -288,11 +308,67 @@ namespace KoolGames.Test03.GamePlay.GameModes
             for (int i = 0; i < 2; i++)
             {
                 AnimalData animalData = animalsList[i];
+                AnimalEntity animalEntity = animalData.AnimalEntity;
+                Transform animalTransform = animalEntity.transform;
                 Transform positionPivot = _mergePositionsTransformsList[i];
 
-                float waitSeconds = _mergeTranslateDuration + _mergeAnimationDuration;
-                await Task.Delay((int)(waitSeconds * 1000));
+                Vector3 startPosition = animalTransform.position;
+                Vector3 finalPosition = positionPivot.position;
+                Quaternion finalRotation = positionPivot.rotation;
+                // Vector3 viewFinalPosition = positionPivot.position;
+
+                Vector3 viewMovementDelta = finalPosition - startPosition;
+                Vector3 halfViewMovementDelta = viewMovementDelta * 0.5f;
+                Vector3 viewMiddlePosition = startPosition + halfViewMovementDelta + (Vector3.up * 2);
+
+                Tween playerViewInitialTween = animalTransform.DOMoveY(viewMiddlePosition.y, _mergeTranslateDuration * 0.5f).SetEase(Ease.OutCubic);
+                animalTransform.DOMoveX(finalPosition.x, _mergeTranslateDuration).SetEase(Ease.OutCubic);
+                animalTransform.DOMoveZ(finalPosition.z, _mergeTranslateDuration).SetEase(Ease.OutCubic);
+
+                playerViewInitialTween.onComplete = () =>
+                {
+                    animalTransform.DOLocalMoveY(0f, _mergeTranslateDuration * 0.5f).SetEase(Ease.InCubic);
+                    animalTransform.DORotate(finalRotation.eulerAngles, _mergeTranslateDuration * 0.5f).SetEase(Ease.InCubic);
+                };
+            }
+
+            float waitSeconds = _mergeTranslateDuration;
+            await Task.Delay((int)(waitSeconds * 1000));
+
+            PlayMergeVFX(animalsList);
+
+            waitSeconds = _mergeAnimationDuration;
+            await Task.Delay((int)(waitSeconds * 1000));
+
+            for (int i = 0; i < 2; i++)
+            {
+                AnimalData animalData = animalsList[i];
+                AnimalEntity animalEntity = animalData.AnimalEntity;
+
                 TryToDestroyAnimal(animalData.AnimalEntity);
+            }
+        }
+
+        void PlayMergeVFX(List<AnimalData> animalsList)
+        {
+            if (animalsList.Count < 2)
+            {
+                string debugText =
+                    "$$ > ".ToColor(GoodColors.Red) +
+                    "ERROR trying to PlayMergeAnimation" + "\n" +
+                    "NOT ENOUGHT animals on list!" + "\n" +
+                    "animalsList.Count =" + animalsList.Count + "\n" +
+                    "";
+                DebugExtension.DevLogWarning(debugText);
+                return;
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                // AnimalData animalData = animalsList[i];
+                // AnimalEntity animalEntity = animalData.AnimalEntity;
+
+                // TryToDestroyAnimal(animalData.AnimalEntity);
             }
         }
 
@@ -300,6 +376,15 @@ namespace KoolGames.Test03.GamePlay.GameModes
         {
             List<AnimalData> value = new List<AnimalData>();
 
+            foreach (AnimalData animalData in _currentAnimalsList.Values)
+            {
+                animalData.DoIfNotNull(
+                    () =>
+                    {
+                        if (animalData.AnimalEntity.IsDominated)
+                            value.Add(animalData);
+                    });
+            }
 
             return value;
         }
