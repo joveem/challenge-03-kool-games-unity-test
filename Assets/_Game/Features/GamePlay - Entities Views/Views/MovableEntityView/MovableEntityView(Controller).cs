@@ -25,7 +25,13 @@ namespace KoolGames.Test03.GamePlay.Entities.Views
         public void SetIsGrounded(bool isGrounded)
         {
             _isGrounded = isGrounded;
+            RefreshInGroundedAnimationState();
             RefreshFootStepParticleState();
+        }
+
+        void RefreshInGroundedAnimationState()
+        {
+            _animator.SetBool("is-grounded", _isGrounded);
         }
 
         public bool GetIsGrounded()
