@@ -28,15 +28,15 @@ namespace KoolGames.Test03.GamePlay.Entities.Views
         // bool _dependencies;
 
 
-        // [Space(5), Header("[ State ]"), Space(10)]
+        [Space(5), Header("[ State ]"), Space(10)]
 
-        // bool _state;
+        bool _isMounted = false;
 
 
         [Space(5), Header("[ Parts ]"), Space(10)]
 
-        [SerializeField] List<GameObject> _ropePartsList = new List<GameObject>();
         public RopeView RopeView;
+        [SerializeField] List<GameObject> _ropePartsList = new List<GameObject>();
 
 
         // [Space(5), Header("[ Configs ]"), Space(10)]

@@ -54,22 +54,22 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
 
         void PlayBeetleCatchAnimation()
         {
-            DoAnimalMount(_playerEntity, _beetleEntity);
+            _montaryLogic.DoAnimalMount(_playerEntity, _beetleEntity);
         }
 
         void PlayBeetlephantCatchAnimation()
         {
-            DoAnimalMount(_playerEntity, _beetlephantEntity);
+            _montaryLogic.DoAnimalMount(_playerEntity, _beetlephantEntity);
         }
 
         void PlayElephantCatchAnimation()
         {
-            DoAnimalMount(_playerEntity, _elephantEntity);
+            _montaryLogic.DoAnimalMount(_playerEntity, _elephantEntity);
         }
 
         void DismountFromCurrentAnimal()
         {
-            DoAnimalDismount(_playerEntity);
+            _montaryLogic.DoAnimalDismount(_playerEntity);
         }
     }
 }

@@ -33,12 +33,10 @@ namespace KoolGames.Test03.GamePlay.PlayerController
 
         [Space(5), Header("[ State ]"), Space(10)]
 
+        float _maxMoveVelocity = 4f;
+        float _moveAccelerationFactor = 3f;
         float _currentXMoveVelocityFactor = 0f;
-        float _maxXMoveVelocity = 5f;
-        float _xMoveAccelerationFactor = 3f;
         float _currentZMoveVelocityFactor = 0f;
-        float _maxZMoveVelocity = 5f;
-        float _zMoveAccelerationFactor = 3f;
 
         Vector3 _currentMovementInput;
 

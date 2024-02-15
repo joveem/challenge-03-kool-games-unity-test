@@ -24,6 +24,11 @@ namespace KoolGames.Test03.GamePlay.PlayerController
 {
     public partial class PlayerMovementLogic : MonoBehaviour
     {
+        public void SetMaxMoveVelocity(float maxMoveVelocity)
+        {
+            _maxMoveVelocity = maxMoveVelocity;
+        }
+
         void HandleMovement()
         {
             if (_playerEntity == null || _playerEntity.Rigidbody == null)
@@ -46,12 +51,12 @@ namespace KoolGames.Test03.GamePlay.PlayerController
             {
                 if (_currentZMoveVelocityFactor < currentYInput)
                 {
-                    _currentZMoveVelocityFactor += Time.fixedDeltaTime * _zMoveAccelerationFactor;
+                    _currentZMoveVelocityFactor += Time.fixedDeltaTime * _moveAccelerationFactor;
                     _currentZMoveVelocityFactor = Mathf.Clamp(_currentZMoveVelocityFactor, -1f, currentYInput);
                 }
                 else
                 {
-                    _currentZMoveVelocityFactor -= Time.fixedDeltaTime * _zMoveAccelerationFactor;
+                    _currentZMoveVelocityFactor -= Time.fixedDeltaTime * _moveAccelerationFactor;
                     _currentZMoveVelocityFactor = Mathf.Clamp(_currentZMoveVelocityFactor, currentYInput, 1f);
                 }
             }
@@ -60,19 +65,19 @@ namespace KoolGames.Test03.GamePlay.PlayerController
             {
                 if (_currentXMoveVelocityFactor < currentXInput)
                 {
-                    _currentXMoveVelocityFactor += Time.fixedDeltaTime * _xMoveAccelerationFactor;
+                    _currentXMoveVelocityFactor += Time.fixedDeltaTime * _moveAccelerationFactor;
                     _currentXMoveVelocityFactor = Mathf.Clamp(_currentXMoveVelocityFactor, -1f, currentXInput);
                 }
                 else
                 {
-                    _currentXMoveVelocityFactor -= Time.fixedDeltaTime * _xMoveAccelerationFactor;
+                    _currentXMoveVelocityFactor -= Time.fixedDeltaTime * _moveAccelerationFactor;
                     _currentXMoveVelocityFactor = Mathf.Clamp(_currentXMoveVelocityFactor, currentXInput, 1f);
                 }
             }
 
 
-            float currentXMovementVelocity = _currentXMoveVelocityFactor * _maxXMoveVelocity;
-            float currentZMovementVelocity = _currentZMoveVelocityFactor * _maxZMoveVelocity;
+            float currentXMovementVelocity = _currentXMoveVelocityFactor * _maxMoveVelocity;
+            float currentZMovementVelocity = _currentZMoveVelocityFactor * _maxMoveVelocity;
             Vector3 inputPosition = new Vector3(currentXMovementVelocity, 0, currentZMovementVelocity);
 
             if (currentXInput != 0 || currentYInput != 0)

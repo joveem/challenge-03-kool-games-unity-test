@@ -38,7 +38,7 @@ namespace KoolGames.Test03.GamePlay.GameModes
         {
             _spatialUIHandler.DoIfNotNull(() =>
             {
-                Vector3 positionDelta = new Vector3(0f, 2f, 0f);
+                Vector3 positionDelta = new Vector3(0f, 3f, 0f);
                 _spatialUIHandler.RegisterSpatialUIItems(_playerEntity.transform, _maxCarryingWarning, positionDelta);
             });
         }
@@ -137,11 +137,7 @@ namespace KoolGames.Test03.GamePlay.GameModes
             }
         }
 
-        [SerializeField] MeshRenderer _capturingAreaMesh;
-        [SerializeField] TriggerEmitter _capturingTrigger;
-        [SerializeField] TriggerEmitter _mergeStationTrigger;
-        [SerializeField] RectTransform _maxCarryingWarning;
-        Dictionary<AnimalEntity, AnimalData> _inCapturingAreaAnimalsList = new Dictionary<AnimalEntity, AnimalData>();
+
 
         void HandleCapturingArea()
         {
@@ -183,37 +179,40 @@ namespace KoolGames.Test03.GamePlay.GameModes
         {
             foreach (AnimalData animalData in _currentAnimalsList.Values)
             {
+                Slider domainSlider = null;
+                bool showDomainSlider = false;
+
+                animalData.DoIfNotNull(() => domainSlider = animalData.DomainSlider);
+
                 int carryingAmount = GetCurrentCarryingAmount();
-                if (carryingAmount >= 2)
-                    return;
-
-                animalData.DoIfNotNull(() =>
+                if (carryingAmount < 2)
                 {
-                    Slider domainSlider = animalData.DomainSlider;
-                    bool showDomainSlider = false;
-
-                    if (!animalData.AnimalEntity.IsStatic && !animalData.AnimalEntity.IsDominated)
-                    {
-                        if (animalData.AnimalEntity.IsBeeingDominated)
+                    animalData.DoIfNotNull(
+                        () =>
                         {
-                            animalData.AnimalEntity.CurrentDomainForce += Time.deltaTime;
-
-                            if (animalData.AnimalEntity.CurrentDomainForce >= animalData.AnimalEntity.RequiredDomainForce)
-                                DoAnimalCapturing(_playerEntity, animalData);
-                            else
+                            if (!animalData.AnimalEntity.IsStatic && !animalData.AnimalEntity.IsDominated)
                             {
-                                showDomainSlider = true;
+                                if (animalData.AnimalEntity.IsBeeingDominated)
+                                {
+                                    animalData.AnimalEntity.CurrentDomainForce += Time.deltaTime;
 
-                                float domainFactor = animalData.AnimalEntity.CurrentDomainForce / animalData.AnimalEntity.RequiredDomainForce;
-                                domainSlider.DoIfNotNull(() => domainSlider.value = domainFactor);
+                                    if (animalData.AnimalEntity.CurrentDomainForce >= animalData.AnimalEntity.RequiredDomainForce)
+                                        DoAnimalCapturing(_playerEntity, animalData);
+                                    else
+                                    {
+                                        showDomainSlider = true;
+
+                                        float domainFactor = animalData.AnimalEntity.CurrentDomainForce / animalData.AnimalEntity.RequiredDomainForce;
+                                        domainSlider.DoIfNotNull(() => domainSlider.value = domainFactor);
+                                    }
+                                }
+                                else
+                                    animalData.AnimalEntity.CurrentDomainForce = 0f;
                             }
-                        }
-                        else
-                            animalData.AnimalEntity.CurrentDomainForce = 0f;
-                    }
+                        });
+                }
 
-                    domainSlider.SetActiveIfNotNull(showDomainSlider);
-                });
+                domainSlider.SetActiveIfNotNull(showDomainSlider);
             }
         }
 
@@ -388,24 +387,26 @@ namespace KoolGames.Test03.GamePlay.GameModes
             return value;
         }
 
-        [SerializeField] Vector3 _particleScale = new Vector3(0.5f, 0.5f, 0.5f);
-        [SerializeField] float _swirlDuration = 3f;
-        [SerializeField] GameObject _mergeParticleEffectPrefab;
-
-
         async void InstantiateMergeEffect(Vector3 centerPosition)
         {
             float waitSeconds = _swirlDuration * 0.35f;
             await Task.Delay(Mathf.FloorToInt(waitSeconds * 1000));
 
-            GameObject particleInstance = Instantiate(_mergeParticleEffectPrefab, centerPosition, Quaternion.Euler(0, 0, 0));
-            particleInstance.transform.localScale = _particleScale;
+            GameObject mergeParticleInstance = Instantiate(_mergeParticleEffectPrefab, centerPosition, Quaternion.Euler(0, 0, 0));
+            mergeParticleInstance.transform.localScale = _particleScale;
 
             waitSeconds = _swirlDuration * 0.65f;
             await Task.Delay(Mathf.FloorToInt(waitSeconds * 1000));
 
             Vector3 destinationPosition = _mergeDestinationPositionTransform.position;
-            particleInstance.transform.DOMove(destinationPosition, _mergeAnimationDuration);
+            mergeParticleInstance.transform.DOMove(destinationPosition, _mergeAnimationDuration);
+
+            waitSeconds = _mergeAnimationDuration;
+            await Task.Delay(Mathf.FloorToInt(waitSeconds * 1000));
+            GameObject experienceParticleInstance = Instantiate(_experienceExplosionEffectPrefab, destinationPosition, Quaternion.Euler(0, 0, 0));
+
+            Destroy(mergeParticleInstance, _swirlDuration);
+            Destroy(experienceParticleInstance, _swirlDuration);
         }
     }
 }

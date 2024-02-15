@@ -19,6 +19,7 @@ using JovDK.Physics.Triggers;
 // from project
 using KoolGames.Test03.GamePlay.Entities;
 using KoolGames.Test03.GamePlay.Entities.Views;
+using KoolGames.Test03.GamePlay.Montary;
 
 
 namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
@@ -26,7 +27,10 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
     public partial class Asmb_PlayerTouchControllerShowcaseScene : MonoBehaviour
     {
 
-        // [Space(5), Header("[ Dependencies ]"), Space(10)]
+        [Space(5), Header("[ Dependencies ]"), Space(10)]
+
+        [SerializeField] MontaryLogic _montaryLogic = null;
+
 
         // bool _dependencies;
 

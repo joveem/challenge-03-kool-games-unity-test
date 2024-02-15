@@ -48,12 +48,19 @@ namespace KoolGames.Test03.GamePlay.Entities.Views
 
         public void PlayMountAnimation()
         {
-            _animator.SetBool("is-mounting", true);
+            _isMounted = true;
+            RefreshMountingAnimationState();
         }
 
         public void StopMountAnimation()
         {
-            _animator.SetBool("is-mounting", false);
+            _isMounted = false;
+            RefreshMountingAnimationState();
+        }
+
+        void RefreshMountingAnimationState()
+        {
+            _animator.SetBool("is-mounting", _isMounted);
         }
     }
 }

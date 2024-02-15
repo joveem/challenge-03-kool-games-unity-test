@@ -26,6 +26,7 @@ namespace KoolGames.Test03.GamePlay.VFX
         public async void PlaySwirlAnimation(
             Vector3 swirlCenterGlobalPosition,
             float duration,
+            bool destroyOnFinish = true,
             Transform finalParent = null)
         {
             float animationHalfDuration = duration / 2f;
@@ -48,7 +49,16 @@ namespace KoolGames.Test03.GamePlay.VFX
                 rotationPivotTransform.SetParent(finalParent);
 
             rotationPivotTransform.DORotate(new Vector3(0f, 180f * 4, 0f), animationHalfDuration, RotateMode.FastBeyond360);
-            rotationPivotTransform.DOScale(Vector3.zero, animationHalfDuration);
+            Tween scaleTween = rotationPivotTransform.DOScale(Vector3.zero, animationHalfDuration);
+
+            TweenCallback onCompleteCallback =
+                () =>
+                {
+                    if (destroyOnFinish)
+                        Destroy(rotationPivotInstance);
+                };
+
+            scaleTween.onComplete += onCompleteCallback;
         }
     }
 }

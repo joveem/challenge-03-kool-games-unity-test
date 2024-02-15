@@ -28,19 +28,21 @@ namespace KoolGames.Test03.GamePlay.Entities.Views
         // bool _dependencies;
 
 
-        // [Space(5), Header("[ State ]"), Space(10)]
+        [Space(5), Header("[ State ]"), Space(10)]
 
-        // bool _state;
+        protected bool _isGrounded = true;
 
 
-        // [Space(5), Header("[ Parts ]"), Space(10)]
+
+        [Space(5), Header("[ Parts ]"), Space(10)]
 
         [SerializeField] protected Animator _animator;
+        [SerializeField] ParticleSystem _footStepsParticle;
 
 
-        // [Space(5), Header("[ Configs ]"), Space(10)]
+        [Space(5), Header("[ Configs ]"), Space(10)]
 
-        // bool _configs;
+        [SerializeField] float _footStepsParticleMinVelocity = 5f;
 
 
         // void Awake()

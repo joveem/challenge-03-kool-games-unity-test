@@ -11,6 +11,7 @@ using TMPro;
 
 // from company
 using JovDK.Debug;
+using JovDK.Physics.Triggers;
 using JovDK.SafeActions;
 using JovDK.SerializingTools.Json;
 
@@ -36,6 +37,7 @@ namespace KoolGames.Test03.GamePlay.GameModes
 
         PlayerEntity _playerEntity;
         Dictionary<AnimalEntity, AnimalData> _currentAnimalsList = new Dictionary<AnimalEntity, AnimalData>();
+        Dictionary<AnimalEntity, AnimalData> _inCapturingAreaAnimalsList = new Dictionary<AnimalEntity, AnimalData>();
 
 
         [Space(5), Header("[ Parts ]"), Space(10)]
@@ -51,8 +53,20 @@ namespace KoolGames.Test03.GamePlay.GameModes
         [SerializeField] int _initialAnimalsAmount = 20;
 
         [Space(10)]
+        [SerializeField] MeshRenderer _capturingAreaMesh;
+        [SerializeField] TriggerEmitter _capturingTrigger;
+        [SerializeField] TriggerEmitter _mergeStationTrigger;
+        [SerializeField] RectTransform _maxCarryingWarning;
+
+        [Space(10)]
         [SerializeField] float _mergeTranslateDuration = 0.5f;
         [SerializeField] float _mergeAnimationDuration = 5f;
+
+        [Space(10)]
+        [SerializeField] float _swirlDuration = 3f;
+        [SerializeField] Vector3 _particleScale = new Vector3(0.5f, 0.5f, 0.5f);
+        [SerializeField] GameObject _mergeParticleEffectPrefab;
+        [SerializeField] GameObject _experienceExplosionEffectPrefab;
 
 
         // void Awake()

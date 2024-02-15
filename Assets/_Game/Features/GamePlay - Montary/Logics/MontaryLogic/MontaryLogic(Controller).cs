@@ -36,7 +36,7 @@ namespace KoolGames.Test03.GamePlay.Montary
             {
                 string debugText =
                     "$ > ".ToColor(GoodColors.Red) +
-                    "ERROR trying to DoAnimalCatch!" + "\n" +
+                    "ERROR trying to DoAnimalMount!" + "\n" +
                     "INVALID ENTITIES!" + "\n" +
                     "";
                 DebugExtension.DevLogWarning(debugText);
@@ -49,7 +49,7 @@ namespace KoolGames.Test03.GamePlay.Montary
             {
                 string debugText =
                     "$ > ".ToColor(GoodColors.Red) +
-                    "ERROR trying to DoAnimalCatch!" + "\n" +
+                    "ERROR trying to DoAnimalMount!" + "\n" +
                     "ALREADY dominated!" + "\n" +
                     "";
                 DebugExtension.DevLogWarning(debugText);
@@ -79,12 +79,15 @@ namespace KoolGames.Test03.GamePlay.Montary
             Vector3 viewMiddlePosition = startPosition + halfViewMovementDelta + (Vector3.up * 2);
 
             // basePlayerEntity.Collider.enabled = false;
+            basePlayerEntity.AddEntityDomain(baseAnimalEntity);
             baseAnimalEntity.Rigidbody.isKinematic = true;
             baseAnimalEntity.Collider.enabled = false;
+            animalView.ApplyZVelocity(0f);
 
             Tween playerTransformInitialTween = playerTransform.DOMove(entityFinalPosition, _catchAnimationDuration);
             playerTransform.DORotate(entityFinalRotation.eulerAngles, _catchAnimationDuration);
 
+            playerView.SetIsGrounded(false);
             Tween playerViewInitialTween = playerViewTransform.DOMoveY(viewMiddlePosition.y, _catchAnimationDuration * 0.5f).SetEase(Ease.OutCubic);
             playerViewTransform.DOMoveX(viewFinalPosition.x, _catchAnimationDuration).SetEase(Ease.OutCubic);
             playerViewTransform.DOMoveZ(viewFinalPosition.z, _catchAnimationDuration).SetEase(Ease.OutCubic);
@@ -105,7 +108,9 @@ namespace KoolGames.Test03.GamePlay.Montary
                 baseAnimalEntity.transform.DOLocalMove(Vector3.zero, 0.1f);
                 baseAnimalEntity.transform.DOLocalRotate(Vector3.zero, 0.1f);
 
-                basePlayerEntity.AddEntityDomain(baseAnimalEntity);
+                playerView.SetIsGrounded(true);
+
+                OnAnimalMountComplete();
             };
         }
 
@@ -135,6 +140,8 @@ namespace KoolGames.Test03.GamePlay.Montary
                 Tween playerTransformInitialTween = playerTransform.DOMove(entityFinalPosition, _catchAnimationDuration);
                 playerTransform.DORotate(entityFinalRotation.eulerAngles, _catchAnimationDuration);
 
+                playerView.SetIsGrounded(false);
+
                 Tween playerViewInitialTween = playerViewTransform.DOMoveY(viewMiddlePosition.y, _catchAnimationDuration * 0.5f).SetEase(Ease.OutCubic);
                 playerViewTransform.DOMoveX(viewFinalPosition.x, _catchAnimationDuration).SetEase(Ease.OutCubic);
                 playerViewTransform.DOMoveZ(viewFinalPosition.z, _catchAnimationDuration).SetEase(Ease.OutCubic);
@@ -154,9 +161,13 @@ namespace KoolGames.Test03.GamePlay.Montary
                     playerViewTransform.DOLocalMove(Vector3.zero, 0.1f);
                     playerViewTransform.DOLocalRotate(Vector3.zero, 0.1f);
 
+                    playerView.SetIsGrounded(true);
+
                     // basePlayerEntity.Collider.enabled = true;
                     baseAnimalEntity.Rigidbody.isKinematic = false;
                     baseAnimalEntity.Collider.enabled = true;
+
+                    OnAnimalDismountComplete();
                 };
             }
             else

@@ -42,10 +42,6 @@ namespace KoolGames.Test03.GamePlay.PlayerController.Testing.Showcase
         [SerializeField] PlayerMovementLogic _playerMovementLogic;
         [SerializeField] PlayerCameraLogic _playerCameraLogic;
 
-        [SerializeField] PlayerEntity _playerEntity;
-        [SerializeField] AnimalEntity _beetleEntity;
-        [SerializeField] AnimalEntity _elephantEntity;
-
 
         [Space(5), Header("[ Configs ]"), Space(10)]
 

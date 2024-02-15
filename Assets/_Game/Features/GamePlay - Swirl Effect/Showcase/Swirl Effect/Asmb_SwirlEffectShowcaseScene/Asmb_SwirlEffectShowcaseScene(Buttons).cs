@@ -32,7 +32,7 @@ namespace KoolGames.Test03.GamePlay.VFX.Testing.Showcase
         void PlayElephantSwirlAnimationButton()
         {
             Vector3 centerPosition = _baseSwirlPositionTransform.position;
-            _elephantSwivelModel.PlaySwirlAnimation(centerPosition, _swirlDuration);
+            _elephantSwivelModel.PlaySwirlAnimation(centerPosition, _swirlDuration, false);
 
             InstantiateMergeEffect(centerPosition);
         }
@@ -40,8 +40,8 @@ namespace KoolGames.Test03.GamePlay.VFX.Testing.Showcase
         void PlayBothSwirlAnimationsButton()
         {
             Vector3 centerPosition = _baseSwirlPositionTransform.position;
-            _elephantSwivelModel.PlaySwirlAnimation(centerPosition, _swirlDuration);
-            _beetleSwivelModel.PlaySwirlAnimation(centerPosition, _swirlDuration);
+            _elephantSwivelModel.PlaySwirlAnimation(centerPosition, _swirlDuration, false);
+            _beetleSwivelModel.PlaySwirlAnimation(centerPosition, _swirlDuration, false);
 
             InstantiateMergeEffect(centerPosition);
         }
@@ -49,7 +49,7 @@ namespace KoolGames.Test03.GamePlay.VFX.Testing.Showcase
         void PlayBettleSwirlAnimationButton()
         {
             Vector3 centerPosition = _baseSwirlPositionTransform.position;
-            _beetleSwivelModel.PlaySwirlAnimation(centerPosition, _swirlDuration);
+            _beetleSwivelModel.PlaySwirlAnimation(centerPosition, _swirlDuration, false);
 
             InstantiateMergeEffect(centerPosition);
         }

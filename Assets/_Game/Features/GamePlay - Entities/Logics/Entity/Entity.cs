@@ -88,7 +88,12 @@ namespace KoolGames.Test03.GamePlay.Entities
             LastPosition = playerRigidbody.position;
 
             if (EntityView is MovableEntityView movableEntityView)
+            {
+                if (!movableEntityView.GetIsGrounded())
+                    playerZVelocity = 0f;
+
                 movableEntityView.ApplyZVelocity(playerZVelocity);
+            }
 
             List<Entity> underDomainEntities = GetDominatedEntitiesList();
             foreach (Entity dominatedEntity in underDomainEntities)

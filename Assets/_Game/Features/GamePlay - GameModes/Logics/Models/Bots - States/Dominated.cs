@@ -34,6 +34,7 @@ namespace KoolGames.Test03.GamePlay.GameModes
 
         // configs
         float _minDistanceToFollow = 5f;
+        float _maxDominatedFollowingCooldown = 1f;
 
         public Dominated(
             AnimalEntity animalEntity,
@@ -53,13 +54,34 @@ namespace KoolGames.Test03.GamePlay.GameModes
                 Vector3 ownerPosition = _animalEntity.OwnerEntity.transform.position;
                 float distance = Vector3.Distance(animalPosition, ownerPosition);
 
-                if (distance > _minDistanceToFollow)
+                bool isOverMinDistanceToFollow = distance > _minDistanceToFollow;
+
+                if (isOverMinDistanceToFollow)
+                    _animalEntity.DominatedFollowingCooldown = _maxDominatedFollowingCooldown;
+                else
+                    _animalEntity.DominatedFollowingCooldown -= Time.deltaTime;
+
+                _animalEntity.DominatedFollowingCooldown =
+                    Mathf.Clamp(
+                        _animalEntity.DominatedFollowingCooldown,
+                        0f,
+                        _maxDominatedFollowingCooldown);
+
+                bool isInFoolowingCooldow = _animalEntity.DominatedFollowingCooldown > 0f;
+                bool hasToForceFollowing = isOverMinDistanceToFollow || isInFoolowingCooldow;
+
+                if (hasToForceFollowing)
                 {
+                    float maxVelocityMultiplier = 1f;
+
+                    if (!isOverMinDistanceToFollow)
+                        maxVelocityMultiplier = 0.75f;
+
                     _botPathHandler.SetGoalPosition(ownerPosition, true);
 
                     _botPathHandler.HandlePathIndexing();
                     _botPathHandler.HandleBotRotation(deltaTime);
-                    _botPathHandler.HandleBotPositioning(deltaTime);
+                    _botPathHandler.HandleBotPositioning(deltaTime, maxVelocityMultiplier);
                 }
             }
         }
@@ -72,6 +94,7 @@ namespace KoolGames.Test03.GamePlay.GameModes
         void IState.OnExit()
         {
             // DebugExtension.DevLog("Dominated <#".ToColor(GoodColors.Orange));
+            _animalEntity.DominatedFollowingCooldown = 0f;
         }
     }
 }

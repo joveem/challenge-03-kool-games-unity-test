@@ -28,9 +28,10 @@ namespace KoolGames.Test03.GamePlay.Montary
         // bool _dependencies;
 
 
-        // [Space(5), Header("[ State ]"), Space(10)]
+        [Space(5), Header("[ State ]"), Space(10)]
 
-        // bool _state;
+        public Action OnAnimalMountCompleteCallback = null;
+        public Action OnAnimalDismountCompleteCallback = null;
 
 
         // [Space(5), Header("[ Parts ]"), Space(10)]

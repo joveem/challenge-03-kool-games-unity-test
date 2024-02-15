@@ -51,6 +51,7 @@ MonoBehaviour:
   EntityView: {fileID: 6281551574651900515}
   Rigidbody: {fileID: 3466840304096038466}
   Collider: {fileID: 7255317682133840049}
+  IsStatic: 0
   RemaingIdleTime: 0
   OwnerEntity: {fileID: 0}
   DomineeringEntity: {fileID: 0}
@@ -60,6 +61,7 @@ MonoBehaviour:
   DominationTryCooldown: 0
   CurrentDomainForce: 0
   RequiredDomainForce: 1
+  DominatedFollowingCooldown: 0
   CurrentZMoveVelocityFactor: 0
   MaxZMoveVelocity: 7
   ZMoveAccelerationFactor: 3

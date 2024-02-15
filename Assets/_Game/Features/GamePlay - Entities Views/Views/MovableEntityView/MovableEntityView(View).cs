@@ -25,6 +25,9 @@ namespace KoolGames.Test03.GamePlay.Entities.Views
         public void ApplyZVelocity(float zVelocity)
         {
             _animator.DoIfNotNull(() => _animator.SetFloat("z-velocity", zVelocity));
+
+            bool hasToEmitParticles = zVelocity >= _footStepsParticleMinVelocity;
+            _footStepsParticle.DoIfNotNull(() => _footStepsParticle.enableEmission = hasToEmitParticles);
         }
     }
 }

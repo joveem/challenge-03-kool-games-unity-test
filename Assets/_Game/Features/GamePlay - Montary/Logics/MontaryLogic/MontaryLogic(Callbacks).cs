@@ -18,22 +18,18 @@ using JovDK.SerializingTools.Json;
 // ...
 
 
-namespace KoolGames.Test03.GamePlay.Entities.Views
+namespace KoolGames.Test03.GamePlay.Montary
 {
-    public partial class PlayerView : MovableEntityView
+    public partial class MontaryLogic : MonoBehaviour
     {
-        void ApplyInitialState()
+        void OnAnimalMountComplete()
         {
-            HideRope();
+            OnAnimalMountCompleteCallback?.Invoke();
         }
 
-        protected override bool HasToEnableFootStepsParticle()
+        void OnAnimalDismountComplete()
         {
-            bool value = false;
-
-            value = _isGrounded && !_isMounted;
-
-            return value;
+            OnAnimalDismountCompleteCallback?.Invoke();
         }
     }
 }

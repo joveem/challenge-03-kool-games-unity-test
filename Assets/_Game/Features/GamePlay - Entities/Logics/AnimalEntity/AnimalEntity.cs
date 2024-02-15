@@ -45,6 +45,7 @@ namespace KoolGames.Test03.GamePlay.Entities
         public float CurrentDomainForce = 0f;
         // public float RequiredDomainForce = 5f;
         public float RequiredDomainForce = 1f;
+        public float DominatedFollowingCooldown = 0f;
 
         // movement
         public float CurrentZMoveVelocityFactor = 0f;

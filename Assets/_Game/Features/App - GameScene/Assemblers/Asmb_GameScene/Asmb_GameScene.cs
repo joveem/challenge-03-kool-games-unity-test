@@ -11,6 +11,7 @@ using TMPro;
 
 // from company
 using JovDK.Debug;
+using JovDK.GamePlay.Camera;
 using JovDK.Generic.SpatialUI;
 using JovDK.SafeActions;
 using JovDK.SerializingTools.Json;
@@ -20,6 +21,7 @@ using KoolGames.Test03.GamePlay;
 using KoolGames.Test03.GamePlay.Entities;
 using KoolGames.Test03.GamePlay.GameModes;
 using KoolGames.Test03.GamePlay.Montary;
+using KoolGames.Test03.GamePlay.PlayerController;
 using KoolGames.Test03.GamePlay.Scenario;
 
 
@@ -36,6 +38,8 @@ namespace KoolGames.Test03.GamePlay
         [SerializeField] MontaryLogic _montaryLogic = null;
         [SerializeField] AnimalsMerging _animalsMerging = null;
         [SerializeField] PlayerEntity _playerEntity = null;
+        [SerializeField] CameraRotationAnimationView _cameraRotationAnimationView = null;
+        [SerializeField] PlayerMovementLogic _playerMovementLogic = null;
 
 
         // [Space(5), Header("[ State ]"), Space(10)]
@@ -64,6 +68,7 @@ namespace KoolGames.Test03.GamePlay
         void Start()
         {
             SetInitialState();
+            SubscribeAllListeners();
         }
 
         // void Update()
