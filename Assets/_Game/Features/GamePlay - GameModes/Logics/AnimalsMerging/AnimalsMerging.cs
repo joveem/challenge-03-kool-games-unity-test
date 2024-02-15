@@ -38,15 +38,21 @@ namespace KoolGames.Test03.GamePlay.GameModes
         Dictionary<AnimalEntity, AnimalData> _currentAnimalsList = new Dictionary<AnimalEntity, AnimalData>();
 
 
-        // [Space(5), Header("[ Parts ]"), Space(10)]
+        [Space(5), Header("[ Parts ]"), Space(10)]
 
-        // bool _parts;
+        [SerializeField] Transform _mergeCenterPositionTransform;
+        [SerializeField] Transform _mergeDestinationPositionTransform;
+        [SerializeField] List<Transform> _mergePositionsTransformsList = new List<Transform>();
 
 
         [Space(5), Header("[ Configs ]"), Space(10)]
 
         [SerializeField] List<AnimalEntity> _animalsPrefabsList = new List<AnimalEntity>();
         [SerializeField] int _initialAnimalsAmount = 20;
+
+        [Space(10)]
+        [SerializeField] float _mergeTranslateDuration = 0.5f;
+        [SerializeField] float _mergeAnimationDuration = 5f;
 
 
         // void Awake()

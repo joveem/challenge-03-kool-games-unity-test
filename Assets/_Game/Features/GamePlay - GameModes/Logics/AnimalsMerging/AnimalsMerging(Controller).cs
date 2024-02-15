@@ -217,9 +217,6 @@ namespace KoolGames.Test03.GamePlay.GameModes
             }
         }
 
-        [SerializeField] List<Transform> _mergePositionsTransformsList = new List<Transform>();
-
-
         void DoAnimalCapturing(
             PlayerEntity playerEntity,
             AnimalData animalData)
@@ -287,9 +284,6 @@ namespace KoolGames.Test03.GamePlay.GameModes
                 PlayMergeAnimation(carryingAnimalsList);
             }
         }
-
-        [SerializeField] float _mergeTranslateDuration = 0.5f;
-        [SerializeField] float _mergeAnimationDuration = 5f;
 
         async void PlayMergeAnimation(List<AnimalData> animalsList)
         {
@@ -363,12 +357,17 @@ namespace KoolGames.Test03.GamePlay.GameModes
                 return;
             }
 
+            Vector3 centerPosition = _mergeCenterPositionTransform.position;
+
+            InstantiateMergeEffect(centerPosition);
+
             for (int i = 0; i < 2; i++)
             {
-                // AnimalData animalData = animalsList[i];
-                // AnimalEntity animalEntity = animalData.AnimalEntity;
+                AnimalData animalData = animalsList[i];
+                AnimalEntity animalEntity = animalData.AnimalEntity;
+                AnimalView animalView = (AnimalView)animalEntity.EntityView;
 
-                // TryToDestroyAnimal(animalData.AnimalEntity);
+                animalView.SwivelModel.PlaySwirlAnimation(centerPosition, _swirlDuration);
             }
         }
 
@@ -387,6 +386,26 @@ namespace KoolGames.Test03.GamePlay.GameModes
             }
 
             return value;
+        }
+
+        [SerializeField] Vector3 _particleScale = new Vector3(0.5f, 0.5f, 0.5f);
+        [SerializeField] float _swirlDuration = 3f;
+        [SerializeField] GameObject _mergeParticleEffectPrefab;
+
+
+        async void InstantiateMergeEffect(Vector3 centerPosition)
+        {
+            float waitSeconds = _swirlDuration * 0.35f;
+            await Task.Delay(Mathf.FloorToInt(waitSeconds * 1000));
+
+            GameObject particleInstance = Instantiate(_mergeParticleEffectPrefab, centerPosition, Quaternion.Euler(0, 0, 0));
+            particleInstance.transform.localScale = _particleScale;
+
+            waitSeconds = _swirlDuration * 0.65f;
+            await Task.Delay(Mathf.FloorToInt(waitSeconds * 1000));
+
+            Vector3 destinationPosition = _mergeDestinationPositionTransform.position;
+            particleInstance.transform.DOMove(destinationPosition, _mergeAnimationDuration);
         }
     }
 }

@@ -1026,18 +1026,23 @@ MonoBehaviour:
   _capturingTrigger: {fileID: 1526071134}
   _mergeStationTrigger: {fileID: 1541153788}
   _maxCarryingWarning: {fileID: 537817984}
-  _mergePositionsTransformsList:
-  - {fileID: 1541153787}
-  - {fileID: 1541153786}
-  _mergeTranslateDuration: 0.5
-  _mergeAnimationDuration: 5
+  _particleScale: {x: 0.5, y: 0.5, z: 0.5}
+  _swirlDuration: 3
+  _mergeParticleEffectPrefab: {fileID: 9088226114815736301, guid: 0f7b2892a9458e542896de1f2917bb5a, type: 3}
   _spatialUIContainer: {fileID: 1468719352}
   _domainSliderPrefab: {fileID: 2698046721869049905, guid: 52a5b4e3ddc9f3548b96f6cdc6024749, type: 3}
   _spatialUIHandler: {fileID: 499220101}
+  _mergeCenterPositionTransform: {fileID: 1541153790}
+  _mergeDestinationPositionTransform: {fileID: 1541153789}
+  _mergePositionsTransformsList:
+  - {fileID: 1541153787}
+  - {fileID: 1541153786}
   _animalsPrefabsList:
   - {fileID: 948842654992742994, guid: e70b41da3055bbf4d8c427083cb287b2, type: 3}
   - {fileID: 6281551574342347984, guid: 3994e6d26a8ac3147be2c64e38827b33, type: 3}
   _initialAnimalsAmount: 8
+  _mergeTranslateDuration: 0.5
+  _mergeAnimationDuration: 5
 --- !u!1 &315546405
 GameObject:
   m_ObjectHideFlags: 0
@@ -6543,6 +6548,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a0f117a88fcdd8449b105d3f545e609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1541153789 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007080968732970855, guid: c531769f6353cf94790bc7e8507d0a86, type: 3}
+  m_PrefabInstance: {fileID: 1541153784}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1541153790 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1478803778223486825, guid: c531769f6353cf94790bc7e8507d0a86, type: 3}
+  m_PrefabInstance: {fileID: 1541153784}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1545256456
 GameObject:
   m_ObjectHideFlags: 0

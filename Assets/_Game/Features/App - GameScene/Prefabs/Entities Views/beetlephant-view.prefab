@@ -1423,6 +1423,7 @@ GameObject:
   - component: {fileID: 2672928004732045587}
   - component: {fileID: 2491225783729794695}
   - component: {fileID: 2491225783729794694}
+  - component: {fileID: 6610825669064332063}
   m_Layer: 0
   m_Name: beetlephant-view
   m_TagString: Untagged
@@ -1499,6 +1500,40 @@ MonoBehaviour:
   _animator: {fileID: 2491225783729794695}
   MountContainerTransform: {fileID: 2491225784961746139}
   DismountPivotTransform: {fileID: 2491225783807543799}
+  SwivelModel: {fileID: 6610825669064332063}
+--- !u!114 &6610825669064332063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3338281641646691241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee8440f09469484682627e80cc9d2e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _centerPositionDelta: {x: 0, y: 0, z: 0}
+  _objectAMeshList:
+  - {fileID: 6219600755586111889}
+  - {fileID: 5992319419637003117}
+  - {fileID: 7121603527231263827}
+  - {fileID: 8706067236934265807}
+  - {fileID: 3749601333905536895}
+  - {fileID: 2184640581081147069}
+  - {fileID: 3492159746828863446}
+  - {fileID: 4655867797996598043}
+  - {fileID: 1618915499704240616}
+  - {fileID: 68103418271120389}
+  - {fileID: 7179733809299607866}
+  - {fileID: 9216126076515890160}
+  - {fileID: 2044580148604991775}
+  - {fileID: 3114993560310998645}
+  - {fileID: 3274775535408845951}
+  _rotationFactorRemap: {x: 0, y: 0.02}
+  _additionalCurveForceRemap: {x: 3000, y: 10000}
+  _objectAAdditionalCurvesAmountByUnit: 4
+  _objectAAdditionalCurveDelta: 0
 --- !u!1 &3351456918167212141
 GameObject:
   m_ObjectHideFlags: 0

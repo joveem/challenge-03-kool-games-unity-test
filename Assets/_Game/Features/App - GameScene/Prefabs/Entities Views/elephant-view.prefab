@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1022634732826482396}
   - component: {fileID: 701323089923027211}
   - component: {fileID: 701323089923027210}
+  - component: {fileID: 3259408987454537917}
   m_Layer: 0
   m_Name: elephant-view
   m_TagString: Untagged
@@ -81,6 +82,34 @@ MonoBehaviour:
   _animator: {fileID: 701323089923027211}
   MountContainerTransform: {fileID: 701323089248446623}
   DismountPivotTransform: {fileID: 4466585030779065258}
+  SwivelModel: {fileID: 3259408987454537917}
+--- !u!114 &3259408987454537917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394892296403356774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee8440f09469484682627e80cc9d2e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _centerPositionDelta: {x: 0, y: 0, z: 0}
+  _objectAMeshList:
+  - {fileID: 3910972231312857308}
+  - {fileID: 6857351130811141822}
+  - {fileID: 1743068556074782541}
+  - {fileID: 6954121175319653745}
+  - {fileID: 3292765159968441606}
+  - {fileID: 7692204216812337952}
+  - {fileID: 4099041356907502420}
+  - {fileID: 7682281443407265633}
+  - {fileID: 7997821582703343766}
+  _rotationFactorRemap: {x: 0, y: 0.02}
+  _additionalCurveForceRemap: {x: 3000, y: 10000}
+  _objectAAdditionalCurvesAmountByUnit: 4
+  _objectAAdditionalCurveDelta: 0
 --- !u!1 &485256468690722605
 GameObject:
   m_ObjectHideFlags: 0

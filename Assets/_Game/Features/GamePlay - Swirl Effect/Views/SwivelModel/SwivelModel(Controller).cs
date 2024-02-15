@@ -47,17 +47,17 @@ namespace KoolGames.Test03.GamePlay.VFX
             float finalAdditionalCurveForce = Remap(_cycleT, 0f, 1f, _additionalCurveForceRemap.x, _additionalCurveForceRemap.y);
 
             Vector3 oldBasePosition = _swirlCenterGlobalPosition;
+            // Vector3 fixedPosition = new Vector3(
+            //                             oldBasePosition.x,
+            //                             oldBasePosition.y,
+            //                             oldBasePosition.z * -1);
+
             foreach (SkinnedMeshRenderer meshRenderer in _objectAMeshList)
             {
                 float finalCurveDelta = Vector3.Distance(meshRenderer.transform.position, oldBasePosition) + _objectAAdditionalCurveDelta;
                 finalCurveDelta = finalCurveDelta / 2;
 
-                Vector3 fixedPosition = new Vector3(
-                    oldBasePosition.x,
-                    oldBasePosition.y,
-                    oldBasePosition.z * -1);
-                
-                fixedPosition += _centerPositionDelta;
+                // fixedPosition += _centerPositionDelta;
 
                 // Vector3 fixedPosition = new Vector3(
                 //     oldBasePositio.x - meshRenderer.transform.position.x,
@@ -69,7 +69,7 @@ namespace KoolGames.Test03.GamePlay.VFX
                     foreach (Material material in meshRenderer.materials)
                     {
                         i++;
-                        material.SetVector("_CenterPosition", fixedPosition);
+                        material.SetVector("_CenterPosition", new Vector3(1.5f, 0f, 0f)); // TODO: REVIEW THIS!
 
                         material.SetFloat("_RotationFactor", finalRotationFactor * -1);
                         material.SetFloat("_AdditionalCurvesForceFactor", finalAdditionalCurveForce);

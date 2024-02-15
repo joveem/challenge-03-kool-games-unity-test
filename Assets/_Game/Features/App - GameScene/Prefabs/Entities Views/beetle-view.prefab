@@ -1260,6 +1260,7 @@ GameObject:
   - component: {fileID: 3179511547587234673}
   - component: {fileID: 3140519211295435925}
   - component: {fileID: 3140519211295435924}
+  - component: {fileID: 9045276919704966323}
   m_Layer: 0
   m_Name: beetle-view
   m_TagString: Untagged
@@ -1345,6 +1346,49 @@ MonoBehaviour:
   _animator: {fileID: 3140519211295435925}
   MountContainerTransform: {fileID: 3140519211839484707}
   DismountPivotTransform: {fileID: 2850194801307306412}
+  SwivelModel: {fileID: 9045276919704966323}
+--- !u!114 &9045276919704966323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2833947535331086795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee8440f09469484682627e80cc9d2e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _centerPositionDelta: {x: 0, y: 0, z: 0}
+  _objectAMeshList:
+  - {fileID: 6864932902742911236}
+  - {fileID: 4709212841753823809}
+  - {fileID: 4761235183328596734}
+  - {fileID: 3123764122651011906}
+  - {fileID: 7942649116525727378}
+  - {fileID: 4263403256747251057}
+  - {fileID: 7222285765498437805}
+  - {fileID: 515543194751471311}
+  - {fileID: 4708953002538861874}
+  - {fileID: 6741692056583674847}
+  - {fileID: 6026576885762279746}
+  - {fileID: 8795849796117534058}
+  - {fileID: 5126743851829334576}
+  - {fileID: 2927394480662919769}
+  - {fileID: 8520247811152215859}
+  - {fileID: 2814917527042993527}
+  - {fileID: 1360943285697545398}
+  - {fileID: 82751592137900279}
+  - {fileID: 5122548357840938440}
+  - {fileID: 5382723066480067784}
+  - {fileID: 8176501173339211565}
+  - {fileID: 2106704461276977789}
+  - {fileID: 5004021392955813974}
+  - {fileID: 7644158845762198896}
+  _rotationFactorRemap: {x: 0, y: 0.02}
+  _additionalCurveForceRemap: {x: 3000, y: 10000}
+  _objectAAdditionalCurvesAmountByUnit: 4
+  _objectAAdditionalCurveDelta: 0
 --- !u!1 &2883806987051863527
 GameObject:
   m_ObjectHideFlags: 0

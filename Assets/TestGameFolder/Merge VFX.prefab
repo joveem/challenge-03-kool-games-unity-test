@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9088226114815736300}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &7739288680497459841
 ParticleSystem:
@@ -4828,7 +4828,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dfd11ac1f262f3841ac9bb009d10f7d8, type: 2}
+  - {fileID: 2100000, guid: 8c340aff885df7145a9f0344f119f04f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9649,7 +9649,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dfd11ac1f262f3841ac9bb009d10f7d8, type: 2}
+  - {fileID: 2100000, guid: 8c340aff885df7145a9f0344f119f04f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -14470,7 +14470,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ceccfc5381313f541aee3c15d681c6d8, type: 2}
+  - {fileID: 2100000, guid: 4b75bcf8a684fb641af54e58d77030be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19365,7 +19365,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9088226114815736300}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &9088226113711303059
 ParticleSystem:
@@ -24162,7 +24162,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ceccfc5381313f541aee3c15d681c6d8, type: 2}
+  - {fileID: 2100000, guid: 4b75bcf8a684fb641af54e58d77030be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24242,8 +24242,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9088226113607177366}
-  - {fileID: 9088226113711303061}
   - {fileID: 3085689384218226315}
+  - {fileID: 9088226113711303061}
   - {fileID: 4670171831765193807}
   - {fileID: 8492978497856804960}
   m_Father: {fileID: 0}

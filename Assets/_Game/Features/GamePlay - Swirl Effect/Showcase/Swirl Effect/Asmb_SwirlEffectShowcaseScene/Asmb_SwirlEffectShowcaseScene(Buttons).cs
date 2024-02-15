@@ -64,7 +64,6 @@ namespace KoolGames.Test03.GamePlay.VFX.Testing.Showcase
 
             GameObject particleInstance = Instantiate(_mergeParticleEffectPrefab, centerPosition, Quaternion.Euler(0, 0, 0));
             particleInstance.transform.localScale = _particleScale;
-            // particleInstance.transform.lossyScale = _particleScale;
         }
     }
 }

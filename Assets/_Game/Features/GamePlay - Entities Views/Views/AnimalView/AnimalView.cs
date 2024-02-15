@@ -15,7 +15,7 @@ using JovDK.SafeActions;
 using JovDK.SerializingTools.Json;
 
 // from project
-// ...
+using KoolGames.Test03.GamePlay.VFX;
 
 
 namespace KoolGames.Test03.GamePlay.Entities.Views
@@ -37,6 +37,7 @@ namespace KoolGames.Test03.GamePlay.Entities.Views
 
         public Transform MountContainerTransform;
         public Transform DismountPivotTransform;
+        public SwivelModel SwivelModel;
 
 
         // [Space(5), Header("[ Configs ]"), Space(10)]
