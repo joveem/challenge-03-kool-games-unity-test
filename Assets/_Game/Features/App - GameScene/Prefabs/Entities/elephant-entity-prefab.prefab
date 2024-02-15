@@ -60,7 +60,7 @@ MonoBehaviour:
   IsBeeingDominated: 0
   DominationTryCooldown: 0
   CurrentDomainForce: 0
-  RequiredDomainForce: 1
+  RequiredDomainForce: 3
   DominatedFollowingCooldown: 0
   CurrentZMoveVelocityFactor: 0
   MaxZMoveVelocity: 7
